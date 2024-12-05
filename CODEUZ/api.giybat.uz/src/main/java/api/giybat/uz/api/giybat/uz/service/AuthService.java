@@ -71,6 +71,7 @@ public class AuthService {
 //            profileRepository.save(profile);
             // 2-usulda faqat status update bo`ladi
             profileRepository.changeStatus(profileId,GeneralStatus.ACTIVE);
+            return "Verification finished!";
         }
         throw new AppBadException("Verification failed!");
     }
