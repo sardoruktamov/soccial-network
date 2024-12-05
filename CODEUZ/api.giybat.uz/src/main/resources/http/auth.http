@@ -1,0 +1,9 @@
+### Registration
+POST localhost:8080/auth/registration
+Content-Type: application/json
+
+{
+  "name": "Sardorbek Uktamov",
+  "username": "bigmangcom@gmail.com",
+  "password": "12345"
+}
