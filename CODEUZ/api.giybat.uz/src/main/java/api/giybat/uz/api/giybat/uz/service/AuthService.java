@@ -7,6 +7,8 @@ import api.giybat.uz.api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.api.giybat.uz.repository.ProfileRepository;
 import api.giybat.uz.api.giybat.uz.repository.ProfileRoleRepository;
+import api.giybat.uz.api.giybat.uz.util.JwtUtil;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -63,15 +65,20 @@ public class AuthService {
         return null;
     }
 
-    public String regVerification(Integer profileId) {
-        ProfileEntity profile = profileService.getById(profileId);
-        if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)){
-            // 1-usulda barcha fieldlarini update qiladi
+    public String regVerification(String token) {
+
+        try{
+            Integer profileId = JwtUtil.decodeRegVerToken(token);
+            ProfileEntity profile = profileService.getById(profileId);
+            if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)){
+                // 1-usulda barcha fieldlarini update qiladi
 //            profile.setStatus(GeneralStatus.ACTIVE);
 //            profileRepository.save(profile);
-            // 2-usulda faqat status update bo`ladi
-            profileRepository.changeStatus(profileId,GeneralStatus.ACTIVE);
-            return "Verification finished!";
+                // 2-usulda faqat status update bo`ladi
+                profileRepository.changeStatus(profileId,GeneralStatus.ACTIVE);
+                return "Verification finished!";
+            }
+        }catch (JwtException e){
         }
         throw new AppBadException("Verification failed!");
     }

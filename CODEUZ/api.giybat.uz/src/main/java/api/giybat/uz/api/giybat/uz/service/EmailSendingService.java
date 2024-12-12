@@ -18,6 +18,9 @@ public class EmailSendingService {
 
     @Value("${spring.mail.username}")
     private String fromAccount;
+
+    @Value("${server.domain}")
+    private String serverDomain;
     @Autowired
     private JavaMailSender javaMailSender;
 
@@ -48,12 +51,12 @@ public class EmailSendingService {
                 "<body>\n" +
                 "<h1>Ro'yxatdan o'tish</h1>\n" +
                 "<p>Ro'yxatdan o'tishni yakunlash uchun tugmani bosing:\n" +
-                "    <a  class=\"tugma\"\n" +
-                "            href=\"http://localhost:8080/auth/registration/verification/%s\" target=\"_blank\">tasdiqlash</a></p>\n" +
+                "    <a  class=\"tugma\"\n style=`hover:  color: white;background-color: darkgray;`" +
+                "            href=\"%s/auth/registration/verification/%s\" target=\"_blank\">tasdiqlash</a></p>\n" +
                 "</body>\n" +
                 "</html>";
 
-        body = String.format(body, JwtUtil.encode(profileId));
+        body = String.format(body,serverDomain, JwtUtil.encode(profileId));
         sendMimeEmail(email,subject,body);
     }
 

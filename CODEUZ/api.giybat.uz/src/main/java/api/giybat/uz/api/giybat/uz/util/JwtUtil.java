@@ -1,9 +1,12 @@
 package api.giybat.uz.api.giybat.uz.util;
 
+import api.giybat.uz.api.giybat.uz.enums.GeneralStatus;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
+import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,17 +28,16 @@ public class JwtUtil {
                 .compact();
     }
 
-    /*public static JwtDTO decode(String token) {
+    public static Integer decodeRegVerToken(String token) {
         Claims claims = Jwts
                 .parser()
-                .verifyWith(getSignInKey())
+                .verifyWith((SecretKey) getSignInKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-        String username = (String) claims.get("username");
-        String role = (String) claims.get("role");
-        return new JwtDTO(username, role);
-    }*/
+        Integer id = Integer.valueOf(claims.getSubject());
+        return id;
+    }
 
     private static Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);

@@ -3,7 +3,7 @@ POST localhost:8080/auth/registration
 Content-Type: application/json
 
 {
-  "name": "Sardorbek Uktamov",
+  "name": "Olimov Olim",
   "username": "uktamov9198@mail.ru",
   "password": "12345"
 }
