@@ -18,7 +18,7 @@ public class ProfileRoleEntity {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile", insertable = false,updatable = false)
+    @JoinColumn(name = "profile_id", insertable = false,updatable = false)
     private ProfileEntity profile;
 
     @Column(name = "profile_id")

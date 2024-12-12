@@ -1,7 +1,8 @@
 package api.giybat.uz.api.giybat.uz.service;
-
+import api.giybat.uz.api.giybat.uz.util.JwtUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -9,7 +10,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
+@Slf4j
 public class EmailSendingService {
 
     @Value("${spring.mail.username}")
@@ -45,11 +49,11 @@ public class EmailSendingService {
                 "<h1>Ro'yxatdan o'tish</h1>\n" +
                 "<p>Ro'yxatdan o'tishni yakunlash uchun tugmani bosing:\n" +
                 "    <a  class=\"tugma\"\n" +
-                "            href=\"http://localhost:8080/auth/registration/verification/%d\" target=\"_blank\">tasdiqlash</a></p>\n" +
+                "            href=\"http://localhost:8080/auth/registration/verification/%s\" target=\"_blank\">tasdiqlash</a></p>\n" +
                 "</body>\n" +
                 "</html>";
-        body = String.format(body,profileId);
 
+        body = String.format(body, JwtUtil.encode(profileId));
         sendMimeEmail(email,subject,body);
     }
 
