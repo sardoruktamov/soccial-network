@@ -18,18 +18,19 @@ public class JwtUtil {
     private static final int tokenLiveTime = 1000 * 3600 * 24; // 1-day
     private static final String secretKey = "veryLongSecretmazgillattayevlasharaaxmojonjinnijonsurbetbekkiydirhonuxlatdibekloxovdangasabekochkozjonduxovmashaynikmaydagapchishularnioqiganbolsangizgapyoqaniqsizmazgi";
 
-    public static String encode(Integer id, List<ProfileRole> roleList) {
+    public static String encode(String username, Integer id, List<ProfileRole> roleList) {
 
         String strRoleList = roleList.stream()
                 .map(item -> item.name())
                 .collect(Collectors.joining(","));  // "ROLE_USER,ROLE_ADMIN"
 
         Map<String,String> claims = new HashMap<>();
-        claims.put("role", strRoleList);
+        claims.put("roles", strRoleList);
+        claims.put("id", String.valueOf(id));
 
         return Jwts
                 .builder()
-                .subject(String.valueOf(id))
+                .subject(username)
                 .claims(claims)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + tokenLiveTime))
@@ -40,14 +41,15 @@ public class JwtUtil {
     public static JwtDTO decode(String token) {
         Claims claims = Jwts
                 .parser()
-                .verifyWith((SecretKey) getSignInKey())
+                .verifyWith(getSignInKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-        Integer id = Integer.valueOf(claims.getSubject());
-        String strRole = (String) claims.get("role");  // "ROLE_USER,ROLE_ADMIN"
-        String[] roleArray = strRole.split(",");
+        String username = claims.getSubject();
+        Integer id = Integer.valueOf((String) claims.get("id"));  //////////XATO BOLSA TEKSHIIIIIRRRRR
+        String strRole = (String) claims.get("roles");  // "ROLE_USER,ROLE_ADMIN"
         // 1-oddiyroq usul
+//        String[] roleArray = strRole.split(",");
 //        List<ProfileRole> roleList_1 = new ArrayList<>();
 //        for (String role : roleArray) {
 //            roleList_1.add(ProfileRole.valueOf(role));
@@ -56,7 +58,7 @@ public class JwtUtil {
         List<ProfileRole> roleList_2 = Arrays.stream(strRole.split(","))
                 .map(ProfileRole::valueOf)
                 .toList();
-        return new JwtDTO(id, roleList_2);
+        return new JwtDTO(username, id, roleList_2);
     }
 
     public static String encode(Integer id) {
@@ -81,7 +83,7 @@ public class JwtUtil {
         return id;
     }
 
-    private static Key getSignInKey() {
+    private static SecretKey getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }

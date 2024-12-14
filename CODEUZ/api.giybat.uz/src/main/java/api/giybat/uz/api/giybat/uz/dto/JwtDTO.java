@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class JwtDTO {
 
+    private String username;
     private Integer id;
     private List<ProfileRole> roleList;
 }

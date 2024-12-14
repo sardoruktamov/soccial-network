@@ -1,0 +1,20 @@
+### Post create
+POST localhost:8080/posts/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTiIsImlkIjoiNyIsImlhdCI6MTczNDE5ODUyMywiZXhwIjoxNzM0Mjg0OTIzfQ.8LDzbEW88aB4Qh5p9F2cbmkhsUmw7PX_Y_f8rKwnDyVOtFu_lFzy9uIlvTOwfU6kPz66GIU0ZWIv2AcGmsFDPA
+
+{
+  "name": "Olimov Olim",
+  "username": "uktamov9198@mail.ru",
+  "password": "12345"
+}
+
+
+### Login
+POST localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username": "uktamov9198@mail.ru",
+  "password": "12345"
+}
