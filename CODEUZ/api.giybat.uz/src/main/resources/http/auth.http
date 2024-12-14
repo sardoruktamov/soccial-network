@@ -10,3 +10,12 @@ Content-Type: application/json
 
 ### Registration verification
 GET http://localhost:8080/auth/registration/verification/{profileId}
+
+### Login
+POST localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username": "uktamov9198@mail.ru",
+  "password": "12345"
+}
