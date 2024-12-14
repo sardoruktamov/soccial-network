@@ -1,5 +1,7 @@
 package api.giybat.uz.api.giybat.uz.service;
 
+import api.giybat.uz.api.giybat.uz.dto.AuthDTO;
+import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.RegistrationDTO;
 import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.api.giybat.uz.enums.GeneralStatus;
@@ -28,7 +30,6 @@ public class AuthService {
     private ProfileRoleRepository profileRoleRepository;
     @Autowired
     private ProfileRoleService profileRoleService;
-
     @Autowired
     private EmailSendingService emailSendingService;
 
@@ -81,5 +82,26 @@ public class AuthService {
         }catch (JwtException e){
         }
         throw new AppBadException("Verification failed!");
+    }
+
+    public ProfileDTO login(AuthDTO dto){
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
+        if (optional.isEmpty()){
+            throw new AppBadException("Username or Password is wrong");
+        }
+        ProfileEntity profile = optional.get();
+        if(!bCryptPasswordEncoder.matches(dto.getPassword(), profile.getPassword())){
+            throw new AppBadException("Username or Password is wrong");
+        }
+        if (!profile.getStatus().equals(GeneralStatus.ACTIVE)){
+            throw new AppBadException("Status error, please register again!");
+        }
+
+        ProfileDTO response = new ProfileDTO();
+        response.setName(profile.getName());
+        response.setUsername(profile.getUsername());
+        response.setRoleList(profileRoleRepository.getAllRolesListByProfileId(profile.getId()));
+        response.setJwt(JwtUtil.encode(profile.getId(),response.getRoleList()));        // jwt
+        return response;
     }
 }
