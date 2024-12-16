@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="./css/header.css"/>
+    <link rel="stylesheet" href="./css/main.css"/>
+    <link rel="stylesheet" href="css/profile-settings.css"/>
+    <link rel="stylesheet" href="./css/profile-cabinet.css"/>
+    <link rel="stylesheet" href="./css/footer.css"/>
+    <title>Shaxsiy Kabinet</title>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- Header start -->
+    <header class="header">
+        <div class="container">
+            <div class="header_container">
+                <div class="header_box__logo">
+                    <a href="index.html">
+                        <img src="./images/logo.png" alt="Book" class="header_logo"/>
+                    </a>
+                </div>
+                <div class="header_block">
+                    <div class="header_box__input">
+                        <input
+                                type="text"
+                                placeholder="Qidirish"
+                                class="header_input"
+                        />
+                        <button class="header_search"></button>
+                    </div>
+                    <div class="dropdown">
+                        <div class="dropdown_toggle" onclick="toggleDropdown()">
+                            <img
+                                    src="./images/language.svg"
+                                    alt="Глобус"
+                                    width="24"
+                                    height="24"
+                            />
+                            <span id="current-lang">RU</span>
+                            <!-- Добавляем стрелку в виде символа -->
+                            <img src="./images/arrow1.svg" alt="arrow" class="arrow"/>
+                            <!-- Стрелка вниз (▼) -->
+                        </div>
+                        <div class="dropdown-content" id="dropdown-content">
+                            <div onclick="setLanguage('UZ')">UZ</div>
+                            <div onclick="setLanguage('RU')">RU</div>
+                        </div>
+                    </div>
+                    <div class="header_btn__box">
+                        <div class="header_burger__box">
+                            <i class="header_burger"></i>
+                        </div>
+                        <a href="login.html" class="header_btn">Log in</a>
+                        <div class="header_entrance__block">
+                            <div class="header_name__block">
+                                <div class="header_img__box">
+                                    <img
+                                            src="https://via.placeholder.com/30"
+                                            alt="User Avatar"
+                                            class="rounded-circle me-2"
+                                    />
+                                </div>
+                                <p class="header_name">Bobur</p>
+                            </div>
+                            <ul class="header_list">
+                                <li class="header_entrance__item">
+                                    <a href="#" class="header_entrance__link">
+                                        Profilni ko'rish
+                                    </a>
+                                </li>
+                                <li class="header_entrance__item">
+                                    <a href="#" class="header_entrance__link">
+                                        Writer page
+                                    </a>
+                                </li>
+                                <li class="header_entrance__item">
+                                    <a href="#" class="header_entrance__link">
+                                        Profildan chiqish
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header end -->
+
+    <!-- Main start -->
+    <section class="profile_tab container">
+
+        <h2 class="profile_tab_title">Shaxsiy kabinet</h2>
+
+        <!-- Profile tab-->
+        <div class="profile_tab_link__block">
+            <a href="profile-post-list.html" class="profile_tab_link ">
+                Mening postlarim
+            </a>
+            <a href="profile-settings.html" class="profile_tab_link active_link">
+                Sozlamalar
+            </a>
+            <a href="admin-profile.html" class="profile_tab_link"> Admin profile </a>
+            <a href="#" class="profile_tab_link">G’iybatlar</a>
+            <div class="profile_tab_line"></div>
+        </div>
+        <!-- Profile end-->
+
+        <!-- Other page content start -->
+        <div class="bottom-m-3">
+            <h4 class="profile_settings-titles">Rasm</h4>
+            <img src="./images/photo.png" class="profile_settings_photo"/>
+        </div>
+
+        <div class="profile-setting-detail-content">
+            <h3 class="profile_settings-titles">Mening Ma’lumotlarim</h3>
+            <div class="profile-setting-info">
+                <div>
+                    <span class="profile-settings_label">Isim </span>
+                    <h5 class="profile-settings_value">Alish Aliyev</h5>
+                </div>
+                <div>
+                    <span class="profile-settings_label">Telefon raqam / Email</span>
+                    <h5 class="profile-settings_value">+998 90 900-00-00</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Other page content end -->
+
+        <button class="btn btn-default">Edit</button>
+
+    </section>
+    <!-- Main end-->
+</div>
+
+<!-- Footer start -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer_container">
+            <div class="footer_logo__box">
+                <a href="index.html">
+                    <img src="./images/logo2.png" alt="Book" class="header_logo"/>
+                </a>
+            </div>
+            <ul class="footer_list">
+                <li class="footer_item">
+                    <a href="" class="footer_link">About project</a>
+                </li>
+                <li class="footer_item">
+                    <a href="" class="footer_link">Telegram</a>
+                </li>
+                <li class="footer_item">
+                    <a href="" class="footer_link">Videohub.uz</a>
+                </li>
+                <li class="footer_item">
+                    <a href="" class="footer_link">Dasturlash.uz</a>
+                </li>
+                <li class="footer_item">© All rights reserved</li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<!-- Footer end -->
+
+<script src="./js/header.js"></script>
+
+</body>
+</html>
