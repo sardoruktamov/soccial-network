@@ -7,6 +7,7 @@ document.getElementById("registrationForm")
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirmPassword").value;
         const errorTextTag = document.getElementById("errorText");
+        const errorEmail = document.getElementById("errorEmail");
 
         if (password !== confirmPassword){
             console.log("teng emas")
@@ -39,11 +40,30 @@ document.getElementById("registrationForm")
             body: JSON.stringify(body)
 
         })
-            .then(res => {
-                console.log(res)
-                alert("sizning " + phoneEmail + " elektron pochtangizga xabar yuborildi!");
+            .then(response =>{
+                if (response.ok){
+                    return response.json()
+                }else {
+                    errorEmail.style.display = "block";
+                    document.getElementById("phoneEmail").style.borderColor = "red";
+                    document.getElementById("phoneEmail").style.color = "red";
+                    errorEmail.textContent = "Username already exists";
+                    return Promise.reject(response.text());
+                }
             })
-            .catch()
+            .then(res => {
+                console.log(res.data)
+                alert("sizning " + phoneEmail + " elektron pochtangizga xabar yuborildi!");
+                errorEmail.style.display = "none";
+                document.getElementById("phoneEmail").style.borderColor = "#ddd";
+                document.getElementById("phoneEmail").style.color = "";
+            })
+            .catch(error =>{
+                error.then(errorMessage =>{
+
+                    console.log(errorMessage)
+                })
+            })
 
     });
 
