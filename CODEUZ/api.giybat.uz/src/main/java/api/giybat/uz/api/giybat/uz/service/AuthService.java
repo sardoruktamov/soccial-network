@@ -1,5 +1,6 @@
 package api.giybat.uz.api.giybat.uz.service;
 
+import api.giybat.uz.api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.api.giybat.uz.dto.AuthDTO;
 import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.RegistrationDTO;
@@ -35,35 +36,36 @@ public class AuthService {
 
     @Autowired
     private ProfileService profileService;
-    public String registration(RegistrationDTO dto){
-    Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
-    if (optional.isPresent()){
-        ProfileEntity profile = optional.get();
-        if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)){
-            profileRoleService.deleteRoles(profile.getId());
-            // 1-usul
-             profileRepository.delete(profile);
-            // 2-usul
-            //send sms/email orqali ro'yxatdan o'tishini davom ettirish
-        }else {
-            throw new AppBadException("Username already exists");
+    public AppResponse<String> registration(RegistrationDTO dto){
+
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
+        if (optional.isPresent()){
+            ProfileEntity profile = optional.get();
+            if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)){
+                profileRoleService.deleteRoles(profile.getId());
+                // 1-usul
+                 profileRepository.delete(profile);
+                // 2-usul
+                //send sms/email orqali ro'yxatdan o'tishini davom ettirish
+            }else {
+                throw new AppBadException("Username already exists");
+            }
         }
-    }
 
-    ProfileEntity entity = new ProfileEntity();
-    entity.setName(dto.getName());
-    entity.setUsername(dto.getUsername());
-    entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
-    entity.setStatus(GeneralStatus.IN_REGISTRATION);
-    entity.setVisible(true);
-    entity.setCreatedDate(LocalDateTime.now());
-    profileRepository.save(entity);
-    // Insert Role
-    profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
+        ProfileEntity entity = new ProfileEntity();
+        entity.setName(dto.getName());
+        entity.setUsername(dto.getUsername());
+        entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
+        entity.setStatus(GeneralStatus.IN_REGISTRATION);
+        entity.setVisible(true);
+        entity.setCreatedDate(LocalDateTime.now());
+        profileRepository.save(entity);
+        // Insert Role
+        profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
-    emailSendingService.sendEmailForRegistration(dto.getUsername(), entity.getId());
+        emailSendingService.sendEmailForRegistration(dto.getUsername(), entity.getId());
 
-        return null;
+        return new AppResponse<>("Muvoffaqiyatli ro'yxatdan o'tdingiz!");
     }
 
     public String regVerification(String token) {
