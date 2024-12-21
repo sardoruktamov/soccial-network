@@ -5,6 +5,7 @@ import api.giybat.uz.api.giybat.uz.dto.AuthDTO;
 import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.RegistrationDTO;
 import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
+import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.api.giybat.uz.enums.GeneralStatus;
 import api.giybat.uz.api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.api.giybat.uz.exps.AppBadException;
@@ -12,14 +13,18 @@ import api.giybat.uz.api.giybat.uz.repository.ProfileRepository;
 import api.giybat.uz.api.giybat.uz.repository.ProfileRoleRepository;
 import api.giybat.uz.api.giybat.uz.util.JwtUtil;
 import io.jsonwebtoken.JwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class AuthService {
 
     @Autowired
@@ -36,7 +41,10 @@ public class AuthService {
 
     @Autowired
     private ProfileService profileService;
-    public AppResponse<String> registration(RegistrationDTO dto){
+
+    @Autowired
+    private ResourceBundleService bundleService;
+    public AppResponse<String> registration(RegistrationDTO dto, AppLanguage lang){
 
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
         if (optional.isPresent()){
@@ -48,7 +56,7 @@ public class AuthService {
                 // 2-usul
                 //send sms/email orqali ro'yxatdan o'tishini davom ettirish
             }else {
-                throw new AppBadException("Email or Phone already exists");
+                throw new AppBadException(bundleService.getMessage("email.phone.exist", lang));
             }
         }
 
@@ -65,10 +73,10 @@ public class AuthService {
 
         emailSendingService.sendEmailForRegistration(dto.getUsername(), entity.getId());
 
-        return new AppResponse<>("Muvoffaqiyatli ro'yxatdan o'tdingiz!");
+        return new AppResponse<>(bundleService.getMessage("email.confirm.send",lang));
     }
 
-    public String regVerification(String token) {
+    public String regVerification(String token, AppLanguage lang) {
 
         try{
             Integer profileId = JwtUtil.decodeRegVerToken(token);
@@ -79,24 +87,24 @@ public class AuthService {
 //            profileRepository.save(profile);
                 // 2-usulda faqat status update bo`ladi
                 profileRepository.changeStatus(profileId,GeneralStatus.ACTIVE);
-                return "Verification finished!";
+                return bundleService.getMessage("verification.finished",lang);
             }
         }catch (JwtException e){
         }
-        throw new AppBadException("Verification failed!");
+        throw new AppBadException(bundleService.getMessage("verification.failed",lang));
     }
 
-    public ProfileDTO login(AuthDTO dto){
+    public ProfileDTO login(AuthDTO dto, AppLanguage lang){
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
         if (optional.isEmpty()){
-            throw new AppBadException("Username or Password is wrong");
+            throw new AppBadException(bundleService.getMessage("username.password.wrong",lang));
         }
         ProfileEntity profile = optional.get();
         if(!bCryptPasswordEncoder.matches(dto.getPassword(), profile.getPassword())){
-            throw new AppBadException("Username or Password is wrong");
+            throw new AppBadException(bundleService.getMessage("username.password.wrong",lang));
         }
         if (!profile.getStatus().equals(GeneralStatus.ACTIVE)){
-            throw new AppBadException("Status error, please register again!");
+            throw new AppBadException(bundleService.getMessage("status.error.register.again",lang));
         }
 
         ProfileDTO response = new ProfileDTO();
