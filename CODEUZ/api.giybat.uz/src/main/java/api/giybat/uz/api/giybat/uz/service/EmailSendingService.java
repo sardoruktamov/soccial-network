@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
@@ -72,7 +73,11 @@ public class EmailSendingService {
             helper.setTo(email);
             helper.setSubject(subject);
             helper.setText(body, true);
-            javaMailSender.send(msg);
+
+            // threadga olish
+            CompletableFuture.runAsync(() ->{
+                javaMailSender.send(msg);
+            });
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }

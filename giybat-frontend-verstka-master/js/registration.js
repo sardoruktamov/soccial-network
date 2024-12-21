@@ -53,10 +53,12 @@ document.getElementById("registrationForm")
             })
             .then(res => {
                 console.log(res.data)
+                localStorage.setItem("registrationEmailMessage", res.data);
                 alert("sizning " + phoneEmail + " elektron pochtangizga xabar yuborildi!");
                 errorEmail.style.display = "none";
                 document.getElementById("phoneEmail").style.borderColor = "#ddd";
                 document.getElementById("phoneEmail").style.color = "";
+                window.location.href = "./registration-email-confirm.html"
             })
             .catch(error =>{
                 error.then(errorMessage =>{
