@@ -48,7 +48,7 @@ public class AuthService {
                 // 2-usul
                 //send sms/email orqali ro'yxatdan o'tishini davom ettirish
             }else {
-                throw new AppBadException("Username already exists");
+                throw new AppBadException("Email or Phone already exists");
             }
         }
 
