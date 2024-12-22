@@ -1,4 +1,5 @@
 package api.giybat.uz.api.giybat.uz.service;
+import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.api.giybat.uz.util.JwtUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -25,7 +26,7 @@ public class EmailSendingService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public void sendEmailForRegistration(String email, Integer profileId){
+    public void sendEmailForRegistration(String email, Integer profileId, AppLanguage lang){
         String subject = "Ro'yxatdan o'tish";
         String body = "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -53,11 +54,11 @@ public class EmailSendingService {
                 "<h1>Ro'yxatdan o'tish</h1>\n" +
                 "<p>Ro'yxatdan o'tishni yakunlash uchun tugmani bosing:\n" +
                 "    <a  class=\"tugma\"\n style=`hover:  color: white;background-color: darkgray;`" +
-                "            href=\"%s/auth/registration/verification/%s\" target=\"_blank\">tasdiqlash</a></p>\n" +
+                "            href=\"%s/auth/registration/verification/%s?lang=%s\" target=\"_blank\">tasdiqlash</a></p>\n" +
                 "</body>\n" +
                 "</html>";
 
-        body = String.format(body,serverDomain, JwtUtil.encode(profileId));
+        body = String.format(body,serverDomain, JwtUtil.encode(profileId), lang.name());
         sendMimeEmail(email,subject,body);
     }
 
