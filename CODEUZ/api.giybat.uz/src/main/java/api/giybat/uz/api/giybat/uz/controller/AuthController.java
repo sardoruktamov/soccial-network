@@ -21,9 +21,9 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/registration")
-    public ResponseEntity<AppResponse<String>> registration(@Valid @RequestBody RegistrationDTO dto/*,
-                                                            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang*/){
-        return ResponseEntity.ok().body(authService.registration(dto,AppLanguage.UZ));
+    public ResponseEntity<AppResponse<String>> registration(@Valid @RequestBody RegistrationDTO dto,
+                                                            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
+        return ResponseEntity.ok().body(authService.registration(dto,lang));
     }
 
     @GetMapping("/registration/verification/{token}")
