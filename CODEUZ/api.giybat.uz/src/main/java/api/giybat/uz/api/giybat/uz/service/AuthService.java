@@ -71,7 +71,7 @@ public class AuthService {
         // Insert Role
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
-        emailSendingService.sendEmailForRegistration(dto.getUsername(), entity.getId());
+        emailSendingService.sendEmailForRegistration(dto.getUsername(), entity.getId(), lang);
 
         return new AppResponse<>(bundleService.getMessage("email.confirm.send",lang));
     }
