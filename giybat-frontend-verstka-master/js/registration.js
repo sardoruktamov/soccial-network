@@ -29,13 +29,16 @@ document.getElementById("registrationForm")
             "username" : phoneEmail,
             "password" : password
         }
-        console.log("body = " + body)
-        console.log("\n")
-        console.log("JSOn = " + JSON.stringify(body))
+
+        const lang = document.getElementById("current-lang").textContent
+        console.log("til tanlandi: ",lang)
+
+
         fetch("http://localhost:8080/auth/registration",{
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept-Language': lang
             },
             body: JSON.stringify(body)
 
@@ -45,6 +48,7 @@ document.getElementById("registrationForm")
                     return response.json()
                 }else {
                     errorEmail.style.display = "block";
+                    console.log("elseee-- " + response.data)
                     document.getElementById("phoneEmail").style.borderColor = "red";
                     document.getElementById("phoneEmail").style.color = "red";
                     errorEmail.textContent = "Username already exists";
@@ -54,7 +58,7 @@ document.getElementById("registrationForm")
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem("registrationEmailMessage", res.data);
-                alert("sizning " + phoneEmail + " elektron pochtangizga xabar yuborildi!");
+                alert(res.data);
                 errorEmail.style.display = "none";
                 document.getElementById("phoneEmail").style.borderColor = "#ddd";
                 document.getElementById("phoneEmail").style.color = "";
