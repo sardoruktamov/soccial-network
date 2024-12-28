@@ -65,7 +65,7 @@ function login() {
             }
         })
         .then(data => {
-            localStorage.setItem("username", JSON.stringify(data));
+            localStorage.setItem("userDetail", JSON.stringify(data));
             localStorage.setItem("jwtToken", data.jwt);
             passwordInput.value = '';
             usernameInput.value = '';

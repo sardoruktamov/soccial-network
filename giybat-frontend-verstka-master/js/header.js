@@ -43,7 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Show profile menu on header
     const userDetailStr = localStorage.getItem("userDetail");
-    if (userDetailStr === null || userDetailStr === undefined) {
+    if (userDetailStr === null || userDetailStr === undefined || userDetailStr === '') {
+        // window.location.href = "./404.html"
         return;
     }
     const userDetail = JSON.parse(userDetailStr);
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const headerUserNameSpan = document.getElementById("header_user_name_id");
     headerUserNameSpan.textContent = userName;
+
 
 });
 
