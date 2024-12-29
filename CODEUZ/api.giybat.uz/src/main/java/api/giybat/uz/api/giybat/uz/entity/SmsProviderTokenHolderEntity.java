@@ -16,9 +16,12 @@ public class SmsProviderTokenHolderEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @Column(name = "token")
+    @Column(name = "token", columnDefinition = "text")
     private String token;
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    @Column(name = "expired_date")
+    private LocalDateTime expiredDate;
 }
