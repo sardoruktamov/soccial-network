@@ -1,0 +1,8 @@
+### receive token for SMS
+POST https://notify.eskiz.uz/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "sardorbek.uktamov.1@mail.ru",
+  "password": "EJyP6OtVcKyjfmdYm7R8CdSnXEnAhAxuxrJ0nYiH"
+}
