@@ -2,6 +2,7 @@ package api.giybat.uz.api.giybat.uz.service;
 
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsAuthDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsAuthResponseDTO;
+import api.giybat.uz.api.giybat.uz.dto.sms.SmsRequestDTO;
 import api.giybat.uz.api.giybat.uz.entity.SmsProviderTokenHolderEntity;
 import api.giybat.uz.api.giybat.uz.repository.SmsProviderTokenHolderRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,6 +11,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,6 +38,30 @@ public class SmsSendService {
 
 
     public String sendSms(String phoneNuber, String message){
+        String token = getToken();
+        // header
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type","application/json");
+        headers.set("Authorization","Bearer " + token);
+        // body
+        SmsRequestDTO body = new SmsRequestDTO();
+        body.setMobile_phone(phoneNuber);
+        body.setMessage(message);
+        body.setFrom("4546");
+        // send request
+        HttpEntity<SmsRequestDTO> entity = new HttpEntity<>(body,headers);
+        ResponseEntity<String> response = restTemplate.exchange(
+                smsUrl + "/message/sms/send",
+                HttpMethod.POST,
+                entity,
+                String.class);//smsUrlga POST request yubor ENTITYni va Stringga konvert qil
+
+        // check response
+        if (!response.getStatusCode().is2xxSuccessful()){
+            throw new RuntimeException("Sms not send");
+        }
+        System.out.println("-------------SMS yuborildiiiii---------------");
+        System.out.println(response.toString());
         return null;
     }
 
@@ -77,7 +106,7 @@ public class SmsSendService {
 
         try {
             // 2-usulda token olish
-            SmsAuthResponseDTO response = restTemplate.postForObject(smsUrl + "/auth/login", smsAuthDTO, SmsAuthResponseDTO.class);
+                SmsAuthResponseDTO response = restTemplate.postForObject(smsUrl + "/auth/login", smsAuthDTO, SmsAuthResponseDTO.class);
             System.out.println(response);
             return response.getData().getToken();
         } catch (RuntimeException e) {
