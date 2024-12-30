@@ -14,7 +14,7 @@ class ApplicationTests {
 
 	@Test
 	void contextLoads(){
-		smsSendService.getToken();
+		smsSendService.sendSms("998911576777","Bu Eskiz dan test");
 	}
 
 }
