@@ -3,8 +3,12 @@ package api.giybat.uz.api.giybat.uz.service;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsAuthDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsAuthResponseDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsRequestDTO;
+import api.giybat.uz.api.giybat.uz.dto.sms.SmsSendResponseDTO;
 import api.giybat.uz.api.giybat.uz.entity.SmsProviderTokenHolderEntity;
+import api.giybat.uz.api.giybat.uz.enums.SmsType;
+import api.giybat.uz.api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.api.giybat.uz.repository.SmsProviderTokenHolderRepository;
+import api.giybat.uz.api.giybat.uz.util.RandomUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,10 +38,33 @@ public class SmsSendService {
     private RestTemplate restTemplate;
 
     @Autowired
+    private SmsHistoryService smsHistoryService;
+
+    @Autowired
     private SmsProviderTokenHolderRepository smsProviderTokenHolderRepository;
+    Integer smsLimit = 1;
 
+    public void sendRegistrationSms(String phoneNumber){
+        String code = RandomUtil.getRandomSmsCode();
+        String message = "MarketZone.uz portali, ro'yxatdan o'tishni tasdiqlash kodi: %s";
+        message = String.format(message,code);
+        sendSms(phoneNumber,message,code,SmsType.REGISTRATION);
+    }
+    private SmsSendResponseDTO sendSms(String phoneNuber, String message, String code, SmsType smsType){
+        // check
+        Long count = smsHistoryService.getSmsCount(phoneNuber);
+        if (count >= smsLimit){
+            throw new AppBadException("SMS limit reached");
+        }
+        SmsSendResponseDTO result = sendSms(phoneNuber, message);
+        // sms save
+        smsHistoryService.created(phoneNuber,message, code, smsType);
+        return result;
 
-    public String sendSms(String phoneNuber, String message){
+    }
+
+    private SmsSendResponseDTO sendSms(String phoneNuber, String message){
+        // get token
         String token = getToken();
         // header
         HttpHeaders headers = new HttpHeaders();
@@ -46,26 +73,31 @@ public class SmsSendService {
         // body
         SmsRequestDTO body = new SmsRequestDTO();
         body.setMobile_phone(phoneNuber);
+        // message -> vaqtincha o'zgaruvchi TODO message
+        message = "Bu Eskiz dan test";
         body.setMessage(message);
         body.setFrom("4546");
         // send request
         HttpEntity<SmsRequestDTO> entity = new HttpEntity<>(body,headers);
-        ResponseEntity<String> response = restTemplate.exchange(
-                smsUrl + "/message/sms/send",
-                HttpMethod.POST,
-                entity,
-                String.class);//smsUrlga POST request yubor ENTITYni va Stringga konvert qil
+        try {
+            ResponseEntity<SmsSendResponseDTO> response = restTemplate.exchange(
+                    smsUrl + "/message/sms/send",
+                    HttpMethod.POST,
+                    entity,
+                    SmsSendResponseDTO.class);//smsUrlga POST request yubor ENTITYni va Stringga konvert qil
 
-        // check response
-        if (!response.getStatusCode().is2xxSuccessful()){
-            throw new RuntimeException("Sms not send");
+            System.out.println(response.toString());
+            System.out.println("-------------SMS yuborildiiiii---------------");
+            SmsSendResponseDTO responseDTO = new SmsSendResponseDTO();
+            return response.getBody();
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            throw new AppBadException("SMS yuborishda xatolik bo'ldi!");
+
         }
-        System.out.println("-------------SMS yuborildiiiii---------------");
-        System.out.println(response.toString());
-        return null;
     }
 
-    public String getToken(){
+    private String getToken(){
         Optional<SmsProviderTokenHolderEntity> optional = smsProviderTokenHolderRepository.findTop1By();
         if (optional.isEmpty()){
             String token = getTokenFromProvider();
@@ -90,7 +122,7 @@ public class SmsSendService {
         return token;
     }
 
-    public String getTokenFromProvider(){
+    private String getTokenFromProvider(){
 
         SmsAuthDTO smsAuthDTO = new SmsAuthDTO();
         smsAuthDTO.setEmail(accountLogin);

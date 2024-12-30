@@ -44,6 +44,10 @@ public class AuthService {
 
     @Autowired
     private ResourceBundleService bundleService;
+
+    @Autowired
+    private SmsSendService smsSendService;
+
     public AppResponse<String> registration(RegistrationDTO dto, AppLanguage lang){
 
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
@@ -71,7 +75,10 @@ public class AuthService {
         // Insert Role
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
-        emailSendingService.sendEmailForRegistration(dto.getUsername(), entity.getId(), lang);
+        // send email
+//        emailSendingService.sendEmailForRegistration(dto.getUsername(), entity.getId(), lang);
+        // send SMS
+        smsSendService.sendRegistrationSms(dto.getUsername());
 
         return new AppResponse<>(bundleService.getMessage("email.confirm.send",lang));
     }

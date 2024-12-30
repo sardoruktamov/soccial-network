@@ -1,5 +1,6 @@
 package api.giybat.uz.api.giybat.uz;
 
+import api.giybat.uz.api.giybat.uz.enums.SmsType;
 import api.giybat.uz.api.giybat.uz.service.SmsSendService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ class ApplicationTests {
 
 	@Test
 	void contextLoads(){
-		smsSendService.sendSms("998911576777","Bu Eskiz dan test");
+//		smsSendService.sendRegistrationSms("998911576777","Bu Eskiz dan test","0000", SmsType.REGISTRATION);
 	}
 
 }

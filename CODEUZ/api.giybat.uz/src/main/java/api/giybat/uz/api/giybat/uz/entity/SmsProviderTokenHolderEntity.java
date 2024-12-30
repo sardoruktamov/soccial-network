@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "sms_provider_token_holder_entity")
+@Table(name = "sms_provider_token_holder")
 @Getter
 @Setter
 public class SmsProviderTokenHolderEntity {
