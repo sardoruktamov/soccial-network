@@ -4,6 +4,7 @@ import api.giybat.uz.api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.api.giybat.uz.dto.AuthDTO;
 import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.RegistrationDTO;
+import api.giybat.uz.api.giybat.uz.dto.sms.SmsVerificationDTO;
 import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.api.giybat.uz.service.AuthService;
 import jakarta.validation.Valid;
@@ -26,10 +27,16 @@ public class AuthController {
         return ResponseEntity.ok().body(authService.registration(dto,lang));
     }
 
-    @GetMapping("/registration/verification/{token}")
-    public ResponseEntity<String> regVerification(@PathVariable("token") String token,
+    @GetMapping("/registration/email-verification/{token}")
+    public ResponseEntity<String> emailVerification(@PathVariable("token") String token,
                                                   @RequestParam(value = "lang", defaultValue = "UZ") AppLanguage lang){
-        return ResponseEntity.ok().body(authService.regVerification(token,lang));
+        return ResponseEntity.ok().body(authService.registrationEmailVerification(token,lang));
+    }
+
+    @PostMapping("/registration/sms-verification")
+    public ResponseEntity<ProfileDTO> smsVerification(@Valid @RequestBody SmsVerificationDTO dto,
+                                                  @RequestParam(value = "lang", defaultValue = "UZ") AppLanguage lang){
+        return ResponseEntity.ok().body(authService.registrationSmsVerification(dto,lang));
     }
 
     @PostMapping("/login")
