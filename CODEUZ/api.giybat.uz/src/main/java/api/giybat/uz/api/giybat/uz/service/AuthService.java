@@ -4,6 +4,7 @@ import api.giybat.uz.api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.api.giybat.uz.dto.AuthDTO;
 import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.RegistrationDTO;
+import api.giybat.uz.api.giybat.uz.dto.sms.SmsVerificationDTO;
 import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.api.giybat.uz.enums.GeneralStatus;
@@ -11,6 +12,7 @@ import api.giybat.uz.api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.api.giybat.uz.repository.ProfileRepository;
 import api.giybat.uz.api.giybat.uz.repository.ProfileRoleRepository;
+import api.giybat.uz.api.giybat.uz.repository.SmsHistoryRepository;
 import api.giybat.uz.api.giybat.uz.util.JwtUtil;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
@@ -38,15 +40,14 @@ public class AuthService {
     private ProfileRoleService profileRoleService;
     @Autowired
     private EmailSendingService emailSendingService;
-
     @Autowired
     private ProfileService profileService;
-
     @Autowired
     private ResourceBundleService bundleService;
-
     @Autowired
     private SmsSendService smsSendService;
+    @Autowired
+    private SmsHistoryService smsHistoryService;
 
     public AppResponse<String> registration(RegistrationDTO dto, AppLanguage lang){
 
@@ -83,7 +84,7 @@ public class AuthService {
         return new AppResponse<>(bundleService.getMessage("email.confirm.send",lang));
     }
 
-    public String regVerification(String token, AppLanguage lang) {
+    public String registrationEmailVerification(String token, AppLanguage lang) {
 
         try{
             Integer profileId = JwtUtil.decodeRegVerToken(token);
@@ -114,6 +115,29 @@ public class AuthService {
             throw new AppBadException(bundleService.getMessage("status.error.register.again",lang));
         }
 
+        // response
+        return getLoginResponse(profile);
+    }
+
+    public ProfileDTO registrationSmsVerification(SmsVerificationDTO dto, AppLanguage lang) {
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getPhoneNumber());
+        if (optional.isEmpty()){
+            throw new AppBadException(bundleService.getMessage("profile.not.found",lang));
+        }
+        ProfileEntity profile = optional.get();
+        // checking status
+        if (!profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)){
+            throw new AppBadException(bundleService.getMessage("verification.failed",lang));
+        }
+        // checking sms code
+        smsHistoryService.check(dto.getPhoneNumber(), dto.getCode(), lang);
+        // ACTIVE
+        profileRepository.changeStatus(profile.getId(),GeneralStatus.ACTIVE);
+        // response
+        return getLoginResponse(profile);
+    }
+
+    public ProfileDTO getLoginResponse(ProfileEntity profile){
         ProfileDTO response = new ProfileDTO();
         response.setName(profile.getName());
         response.setUsername(profile.getUsername());

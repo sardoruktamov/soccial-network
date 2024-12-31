@@ -54,7 +54,7 @@ public class EmailSendingService {
                 "<h1>Ro'yxatdan o'tish</h1>\n" +
                 "<p>Ro'yxatdan o'tishni yakunlash uchun tugmani bosing:\n" +
                 "    <a  class=\"tugma\"\n style=`hover:  color: white;background-color: darkgray;`" +
-                "            href=\"%s/auth/registration/verification/%s?lang=%s\" target=\"_blank\">tasdiqlash</a></p>\n" +
+                "            href=\"%s/auth/registration/email-verification/%s?lang=%s\" target=\"_blank\">tasdiqlash</a></p>\n" +
                 "</body>\n" +
                 "</html>";
 

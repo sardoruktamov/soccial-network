@@ -4,20 +4,30 @@ Content-Type: application/json
 Accept-Language: UZ
 
 {
-  "name": "Olimov Olim",
-  "username": "uktamov19198@mail.ru",
+  "name": "Ikromov Alsher",
+  "username": "998911576777",
   "password": "12345"
 }
 
 ### Registration verification
 GET http://localhost:8080/auth/registration/verification/{profileId}
 
+### Registration sms verification
+POST localhost:8080/auth/registration/sms-verification
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "phoneNumber": "998911576777",
+  "code": "88680"
+}
+
 ### Login
 POST localhost:8080/auth/login
 Content-Type: application/json
-Accept-Language: EN
+Accept-Language: UZ
 
 {
   "username": "uktamov9198@mail.ru",
-  "password": "12345"
+  "password": "111"
 }
