@@ -59,7 +59,6 @@ function login() {
             if (response.ok){
                 return response.json()
             }else {
-                console.log("elseee-- " + response.data)
                 usernameErrorSpan.textContent = "Username already exists";
                 return Promise.reject(response.text());
             }
@@ -67,6 +66,7 @@ function login() {
         .then(data => {
             localStorage.setItem("userDetail", JSON.stringify(data));
             localStorage.setItem("jwtToken", data.jwt);
+            // sahifani ortga qaytganda kiritilgan qiymatlar o'chirilyapti
             passwordInput.value = '';
             usernameInput.value = '';
             window.location.href = "./profile-post-list.html"

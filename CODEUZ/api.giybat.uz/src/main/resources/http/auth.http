@@ -22,6 +22,15 @@ Accept-Language: UZ
   "code": "88680"
 }
 
+### Registration sms verification RESENT
+POST localhost:8080/auth/registration/sms-verification-resent
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "phoneNumber": "998911576777"
+}
+
 ### Login
 POST localhost:8080/auth/login
 Content-Type: application/json

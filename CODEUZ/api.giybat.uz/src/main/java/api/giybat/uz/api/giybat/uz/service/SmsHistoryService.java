@@ -29,7 +29,7 @@ public class SmsHistoryService {
         smsHistoryRepository.save(entity);
     }
 
-    public Long getSmsCount(String phone){
+    public Long getSmsCount(String phone){      // 1 minutni ichida sms yuborishni tekshirish
         LocalDateTime now = LocalDateTime.now();
         return smsHistoryRepository.countByPhoneNumberAndCreatedDateBetween(phone,now.minusMinutes(1),now);
     }

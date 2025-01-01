@@ -4,6 +4,7 @@ import api.giybat.uz.api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.api.giybat.uz.dto.AuthDTO;
 import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.RegistrationDTO;
+import api.giybat.uz.api.giybat.uz.dto.sms.SmsResentDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsVerificationDTO;
 import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
@@ -13,7 +14,9 @@ import api.giybat.uz.api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.api.giybat.uz.repository.ProfileRepository;
 import api.giybat.uz.api.giybat.uz.repository.ProfileRoleRepository;
 import api.giybat.uz.api.giybat.uz.repository.SmsHistoryRepository;
+import api.giybat.uz.api.giybat.uz.util.EmailUtil;
 import api.giybat.uz.api.giybat.uz.util.JwtUtil;
+import api.giybat.uz.api.giybat.uz.util.PhoneUtil;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,10 +79,14 @@ public class AuthService {
         // Insert Role
         profileRoleService.create(entity.getId(), ProfileRole.ROLE_USER);
 
-        // send email
-//        emailSendingService.sendEmailForRegistration(dto.getUsername(), entity.getId(), lang);
-        // send SMS
-        smsSendService.sendRegistrationSms(dto.getUsername());
+        // Usernameni tekshirish email yoki phone ekanligiga >>>PASTDA 2-USUL<<<<<
+        if (EmailUtil.isEmail(dto.getUsername())){
+            // send email
+            emailSendingService.sendEmailForRegistration(dto.getUsername(), entity.getId(), lang);
+        }else if (PhoneUtil.isPhone(dto.getUsername())){
+            // send SMS
+            smsSendService.sendRegistrationSms(dto.getUsername());
+        }
 
         return new AppResponse<>(bundleService.getMessage("email.confirm.send",lang));
     }
@@ -137,6 +144,21 @@ public class AuthService {
         return getLoginResponse(profile);
     }
 
+    public AppResponse<String> registrationSmsVerificationResent(SmsResentDTO dto, AppLanguage lang) {
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getPhoneNumber());
+
+        if (optional.isEmpty()){
+            throw new AppBadException(bundleService.getMessage("profile.not.found",lang));
+        }
+        ProfileEntity profile = optional.get();
+        // checking status
+        if (!profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)){
+            throw new AppBadException(bundleService.getMessage("verification.failed",lang));
+        }
+        smsSendService.sendRegistrationSms(dto.getPhoneNumber());
+        return new AppResponse<>(bundleService.getMessage("sms.resend",lang));
+    }
+
     public ProfileDTO getLoginResponse(ProfileEntity profile){
         ProfileDTO response = new ProfileDTO();
         response.setName(profile.getName());
@@ -145,4 +167,49 @@ public class AuthService {
         response.setJwt(JwtUtil.encode(profile.getUsername(), profile.getId(),response.getRoleList()));        // jwt
         return response;
     }
+
 }
+
+/*
+>>> 2-USUL Usernameni tekshirish email yoki phone ekanligiga<<<<<
+@Service
+@Slf4j
+public class AuthService {
+
+    public AppResponse<String> registration(RegistrationDTO dto, AppLanguage lang) {
+        String username = dto.getUsername();
+        String type = checkEmailOrPhone(username);
+
+        if ("Email".equals(type)) {
+            // Email keldi
+            log.info("Email detected: {}", username);
+            emailSendingService.sendEmailForRegistration(username, entity.getId(), lang);
+        } else if ("Phone".equals(type)) {
+            // Telefon raqam keldi
+            log.info("Phone number detected: {}", username);
+            smsSendService.sendRegistrationSms(username);
+        } else {
+            throw new IllegalArgumentException("Invalid email or phone number: " + username);
+        }
+
+        return AppResponse.<String>builder()
+                .message("Registration successful")
+                .data("Success")
+                .build();
+    }
+
+    private String checkEmailOrPhone(String value) {
+        // Regular expression for validating email
+        String emailRegex = "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$";
+        // Regular expression for validating phone numbers
+        String phoneRegex = "^998\\d{9}$"; // Uzbekistan phone format
+
+        if (value.matches(emailRegex)) {
+            return "Email";
+        } else if (value.matches(phoneRegex)) {
+            return "Phone";
+        } else {
+            return "Invalid";
+        }
+    }
+}*/

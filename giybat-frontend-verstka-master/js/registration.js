@@ -56,17 +56,21 @@ document.getElementById("registrationForm")
                 }
             })
             .then(res => {
-                console.log(res.data)
-                localStorage.setItem("registrationEmailMessage", res.data);
-                alert(res.data);
                 errorEmail.style.display = "none";
                 document.getElementById("phoneEmail").style.borderColor = "#ddd";
                 document.getElementById("phoneEmail").style.color = "";
-                window.location.href = "./registration-email-confirm.html"
+
+                const emailOrPhone = checkEmailOrPhone(phoneEmail);
+                if (emailOrPhone === 'Email'){    // email
+                    localStorage.setItem("registrationEmailMessage", res.data);
+                    window.location.href = "./registration-email-confirm.html";
+                }else if (emailOrPhone === 'Phone'){  // phone
+                    localStorage.setItem("userPhoneNumber", phoneEmail);
+                    window.location.href = "./sms-confirm.html"
+                }
             })
             .catch(error =>{
                 error.then(errorMessage =>{
-
                     console.log(errorMessage)
                 })
             })
