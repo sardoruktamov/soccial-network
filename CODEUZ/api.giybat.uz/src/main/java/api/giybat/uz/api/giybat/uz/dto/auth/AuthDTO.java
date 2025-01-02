@@ -1,4 +1,4 @@
-package api.giybat.uz.api.giybat.uz.dto;
+package api.giybat.uz.api.giybat.uz.dto.auth;
 
 import jakarta.persistence.Column;
 import lombok.Getter;
