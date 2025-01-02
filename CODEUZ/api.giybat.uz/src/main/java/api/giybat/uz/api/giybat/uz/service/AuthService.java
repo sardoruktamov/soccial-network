@@ -1,9 +1,10 @@
 package api.giybat.uz.api.giybat.uz.service;
 
 import api.giybat.uz.api.giybat.uz.dto.AppResponse;
-import api.giybat.uz.api.giybat.uz.dto.AuthDTO;
+import api.giybat.uz.api.giybat.uz.dto.auth.AuthDTO;
 import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
-import api.giybat.uz.api.giybat.uz.dto.RegistrationDTO;
+import api.giybat.uz.api.giybat.uz.dto.auth.RegistrationDTO;
+import api.giybat.uz.api.giybat.uz.dto.auth.ResetPasswordDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsResentDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsVerificationDTO;
 import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
@@ -13,19 +14,16 @@ import api.giybat.uz.api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.api.giybat.uz.repository.ProfileRepository;
 import api.giybat.uz.api.giybat.uz.repository.ProfileRoleRepository;
-import api.giybat.uz.api.giybat.uz.repository.SmsHistoryRepository;
 import api.giybat.uz.api.giybat.uz.util.EmailUtil;
 import api.giybat.uz.api.giybat.uz.util.JwtUtil;
 import api.giybat.uz.api.giybat.uz.util.PhoneUtil;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -85,7 +83,7 @@ public class AuthService {
             emailSendingService.sendEmailForRegistration(dto.getUsername(), entity.getId(), lang);
         }else if (PhoneUtil.isPhone(dto.getUsername())){
             // send SMS
-            smsSendService.sendRegistrationSms(dto.getUsername());
+            smsSendService.sendRegistrationSms(dto.getUsername(), lang);
         }
 
         return new AppResponse<>(bundleService.getMessage("email.confirm.send",lang));
@@ -155,8 +153,32 @@ public class AuthService {
         if (!profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)){
             throw new AppBadException(bundleService.getMessage("verification.failed",lang));
         }
-        smsSendService.sendRegistrationSms(dto.getPhoneNumber());
+        smsSendService.sendRegistrationSms(dto.getPhoneNumber(), lang);
         return new AppResponse<>(bundleService.getMessage("sms.resend",lang));
+    }
+
+    public AppResponse<String> resetPassword(ResetPasswordDTO dto, AppLanguage lang) {
+
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
+        if (optional.isEmpty()){
+            throw new AppBadException(bundleService.getMessage("profile.not.found",lang));
+        }
+        ProfileEntity profile = optional.get();
+
+        if (!profile.getStatus().equals(GeneralStatus.ACTIVE)){
+            throw new AppBadException(bundleService.getMessage("status.error.register.again",lang));
+        }
+
+        //  sms or email send
+        if (EmailUtil.isEmail(dto.getUsername())){
+            // send email
+            emailSendingService.sendResetPasswordEmail(dto.getUsername(), lang);
+        }else if (PhoneUtil.isPhone(dto.getUsername())){
+            // send SMS
+            smsSendService.sendResetPasswordSms(dto.getUsername(), lang);
+        }
+        String responseMessage = bundleService.getMessage("resent.password.code.sent",lang);
+        return new AppResponse<String>(String.format(responseMessage,dto.getUsername()));
     }
 
     public ProfileDTO getLoginResponse(ProfileEntity profile){
@@ -167,6 +189,7 @@ public class AuthService {
         response.setJwt(JwtUtil.encode(profile.getUsername(), profile.getId(),response.getRoleList()));        // jwt
         return response;
     }
+
 
 }
 

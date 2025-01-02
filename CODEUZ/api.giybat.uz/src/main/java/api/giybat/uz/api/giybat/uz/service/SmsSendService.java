@@ -5,6 +5,7 @@ import api.giybat.uz.api.giybat.uz.dto.sms.SmsAuthResponseDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsRequestDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsSendResponseDTO;
 import api.giybat.uz.api.giybat.uz.entity.SmsProviderTokenHolderEntity;
+import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.api.giybat.uz.enums.SmsType;
 import api.giybat.uz.api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.api.giybat.uz.repository.SmsProviderTokenHolderRepository;
@@ -41,29 +42,44 @@ public class SmsSendService {
     private SmsHistoryService smsHistoryService;
 
     @Autowired
+    private ResourceBundleService bundleService;
+
+    @Autowired
     private SmsProviderTokenHolderRepository smsProviderTokenHolderRepository;
+
     Integer smsLimit = 1;
 
-    public void sendRegistrationSms(String phoneNumber){
+
+
+    public void sendRegistrationSms(String phoneNumber, AppLanguage lang){
         String code = RandomUtil.getRandomSmsCode();
-        String message = "MarketZone.uz portali, ro'yxatdan o'tishni tasdiqlash kodi: %s";
+        String message = bundleService.getMessage("sms.registration.confirmcode",lang) + ": %s";
         message = String.format(message,code);
-        sendSms(phoneNumber,message,code,SmsType.REGISTRATION);
+        sendSms(phoneNumber,message,code,SmsType.REGISTRATION, lang);
     }
-    private SmsSendResponseDTO sendSms(String phoneNuber, String message, String code, SmsType smsType){
+//    private final String messageEskiz = new SmsSendService().sendRegistrationSms();
+    private SmsSendResponseDTO sendSms(String phoneNuber, String message, String code, SmsType smsType, AppLanguage lang){
         // check
         Long count = smsHistoryService.getSmsCount(phoneNuber);
         if (count >= smsLimit){
-            throw new AppBadException("SMS limit reached");
+            throw new AppBadException(bundleService.getMessage("you.can.send.one.sms.code",lang));
         }
-        SmsSendResponseDTO result = sendSms(phoneNuber, message);
+        SmsSendResponseDTO result = sendSms(phoneNuber, message, lang);
         // sms save
         smsHistoryService.created(phoneNuber,message, code, smsType);
         return result;
 
     }
 
-    private SmsSendResponseDTO sendSms(String phoneNuber, String message){
+    public void sendResetPasswordSms(String username, AppLanguage lang) {
+        String code = RandomUtil.getRandomSmsCode();
+        String message = bundleService.getMessage("sms.registration.confirmcode",lang) + "RESET PASSWORD: %s";
+        message = String.format(message,code);
+        sendSms(username,message,code,SmsType.RESET_PASSWORD, lang);
+    }
+
+
+    private SmsSendResponseDTO sendSms(String phoneNuber, String message, AppLanguage lang){
         // get token
         String token = getToken();
         // header
@@ -73,8 +89,8 @@ public class SmsSendService {
         // body
         SmsRequestDTO body = new SmsRequestDTO();
         body.setMobile_phone(phoneNuber);
-        // message -> vaqtincha o'zgaruvchi TODO message
-        message = "Bu Eskiz dan test";
+        // message -> vaqtincha o'zgaruvchi TODO message SHARTNOMA TUZILGANDA O'ZGARTIRISH
+        message = bundleService.getMessage("sms.registration.confirmcode",lang);
         body.setMessage(message);
         body.setFrom("4546");
         // send request
@@ -92,7 +108,7 @@ public class SmsSendService {
             return response.getBody();
         }catch (RuntimeException e){
             e.printStackTrace();
-            throw new AppBadException("SMS yuborishda xatolik bo'ldi!");
+            throw new AppBadException(bundleService.getMessage("error.sending.sms",lang));
 
         }
     }
@@ -148,4 +164,6 @@ public class SmsSendService {
 
 
     }
+
+
 }

@@ -1,11 +1,11 @@
 ### Registration
 POST localhost:8080/auth/registration
 Content-Type: application/json
-Accept-Language: UZ
+Accept-Language: RU
 
 {
   "name": "Ikromov Alsher",
-  "username": "998911576777",
+  "username": "uktamov9198@mail.ru",
   "password": "12345"
 }
 
@@ -29,6 +29,15 @@ Accept-Language: UZ
 
 {
   "phoneNumber": "998911576777"
+}
+
+### RESET PASSWORD
+POST localhost:8080/auth/registration/reset-password
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "username": "998911576777"
 }
 
 ### Login

@@ -1,8 +1,13 @@
 package api.giybat.uz.api.giybat.uz.service;
 import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
+import api.giybat.uz.api.giybat.uz.enums.SmsType;
+import api.giybat.uz.api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.api.giybat.uz.util.JwtUtil;
+import api.giybat.uz.api.giybat.uz.util.RandomUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +23,7 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class EmailSendingService {
 
+    Integer smsLimit = 1;
     @Value("${spring.mail.username}")
     private String fromAccount;
 
@@ -25,6 +31,12 @@ public class EmailSendingService {
     private String serverDomain;
     @Autowired
     private JavaMailSender javaMailSender;
+
+    @Autowired
+    private EmailHistoryService emailHistoryService;
+
+    @Autowired
+    private ResourceBundleService bundleService;
 
     public void sendEmailForRegistration(String email, Integer profileId, AppLanguage lang){
         String subject = "Ro'yxatdan o'tish";
@@ -62,7 +74,55 @@ public class EmailSendingService {
         sendMimeEmail(email,subject,body);
     }
 
+    public void sendResetPasswordEmail(String email, AppLanguage lang){
+        String subject = "Parolni tiklash";
+        String code = RandomUtil.getRandomSmsCode();
+        String body = "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <title>Title</title>\n" +
+                "    <style>\n" +
+                "        a{\n" +
+                "            padding: 10px 30px;\n" +
+                "            display: inline-block;\n" +
+                "        }\n" +
+                "        .tugma{\n" +
+                "          text-decoration: none;\n" +
+                "            color: darkslategrey;\n" +
+                "            background-color: wheat;\n" +
+                "            border-radius: 5px;\n" +
+                "        }\n" +
+                "        .tugma:hover{\n" +
+                "            color: white;\n" +
+                "            background-color: darkgray;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<h1>Parolni tiklash</h1>\n" +
+                "<p>Parolni tiklash uchun tugmani bosing:\n" +
+                "    <a  class=\"tugma\"\n style=`hover:  color: white;background-color: darkgray;`" +
+                "            href=\"%s/auth/registration/email-verification/?lang=%s\" target=\"_blank\">%s</a></p>\n" +
+                "</body>\n" +
+                "</html>";
 
+        body = String.format(body, serverDomain, lang.name(),code);
+
+        checkAndSendMimeEmail(email, code, subject, body, lang);
+    }
+
+    private void checkAndSendMimeEmail(String email,String code, String subject, String body, AppLanguage lang){
+        // check
+        Long count = emailHistoryService.getEmailCount(email);
+        if (count >= smsLimit){
+            throw new AppBadException(bundleService.getMessage("you.can.send.one.sms.code",lang));
+        }
+        // create
+        emailHistoryService.created(email,code, SmsType.RESET_PASSWORD);
+        // send
+        sendMimeEmail(email,subject,body);
+    }
 
     private void sendMimeEmail(String email, String subject, String body){
 
