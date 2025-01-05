@@ -101,13 +101,11 @@ public class EmailSendingService {
                 "</head>\n" +
                 "<body>\n" +
                 "<h1>Parolni tiklash</h1>\n" +
-                "<p>Parolni tiklash uchun tugmani bosing:\n" +
-                "    <a  class=\"tugma\"\n style=`hover:  color: white;background-color: darkgray;`" +
-                "            href=\"%s/auth/registration/email-verification/?lang=%s\" target=\"_blank\">%s</a></p>\n" +
+                "<p style=`color: red`>Parolni tiklash uchun kod: <b>%s</b></p>\n" +
                 "</body>\n" +
                 "</html>";
 
-        body = String.format(body, serverDomain, lang.name(),code);
+        body = String.format(body,code);
 
         checkAndSendMimeEmail(email, code, subject, body, lang);
     }
