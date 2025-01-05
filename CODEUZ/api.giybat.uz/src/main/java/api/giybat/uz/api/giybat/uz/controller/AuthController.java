@@ -4,6 +4,7 @@ import api.giybat.uz.api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.api.giybat.uz.dto.auth.AuthDTO;
 import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.auth.RegistrationDTO;
+import api.giybat.uz.api.giybat.uz.dto.auth.ResetPasswordConfirmDTO;
 import api.giybat.uz.api.giybat.uz.dto.auth.ResetPasswordDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsResentDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsVerificationDTO;
@@ -61,7 +62,13 @@ public class AuthController {
 
     @PostMapping("/registration/reset-password")
     public ResponseEntity<AppResponse<String>> resetPassword(@Valid @RequestBody ResetPasswordDTO dto,
-                                            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
+                                                             @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
         return ResponseEntity.ok().body(authService.resetPassword(dto,lang));
+    }
+
+    @PostMapping("/registration/reset-password-confirm")
+    public ResponseEntity<AppResponse<String>> resetPassword(@Valid @RequestBody ResetPasswordConfirmDTO dto,
+                                            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
+        return ResponseEntity.ok().body(authService.resetPasswordConfirm(dto,lang));
     }
 }
