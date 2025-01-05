@@ -12,6 +12,67 @@ window.onload = function () {
 
 function profileDetailUpdate() {
     const name = document.getElementById("profile_settings_name").value
+    const jwtToken = localStorage.getItem("jwtToken");
+    const nameErrorSpan = document.getElementById("nameErrorSpan")
+    if (!name ) {
+        return;
+    }
+    if (!jwtToken) {
+        window.location.href = "./login.html";
+        return;
+    }
+    console.log(name)
+
+    const body = {
+        "name" : name
+    }
+
+    const lang = document.getElementById("current-lang").textContent
+
+
+    fetch("http://localhost:8080/profile/detail",{
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept-Language': lang,
+            'Authorization': "Bearer " + jwtToken
+        },
+        body: JSON.stringify(body)
+
+    })
+        .then(response =>{
+            if (response.ok){
+                return response.json()
+            }else {
+                return Promise.reject(response.text());
+            }
+        })
+        .then(data => {
+            alert(data.data)
+            nameErrorSpan.style.display = "block";
+            document.getElementById("nameErrorSpan").style.borderColor = "#ddd";
+            document.getElementById("nameErrorSpan").style.color = "";
+            // userDetail obyektini olish
+            const userDetail = JSON.parse(localStorage.getItem("userDetail"));
+
+            // Obyektdagi name maydonini yangilash
+            userDetail.name = name;
+
+            // Yangilangan obyektni localStorage'ga qayta yozish
+            localStorage.setItem("userDetail", JSON.stringify(userDetail));
+
+            const headerUserNameSpan = document.getElementById("header_user_name_id");
+            headerUserNameSpan.textContent = name;
+
+        })
+        .catch(error =>{
+            error.then(errorMessage =>{
+                console.log(errorMessage.toString());
+                nameErrorSpan.style.display = "block";
+                document.getElementById("nameErrorSpan").style.color = "red";
+                nameErrorSpan.textContent = errorMessage.toString();
+            })
+        })
 
 }
 

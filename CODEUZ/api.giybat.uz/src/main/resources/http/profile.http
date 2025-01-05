@@ -1,0 +1,19 @@
+### Profile detail update
+PUT localhost:8080/profile/detail
+Content-Type: application/json
+Accept-Language: EN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjEyMCIsImlhdCI6MTczNjA2MTY2MywiZXhwIjoxNzM2MTQ4MDYzfQ.qbS1_1KSer81vkRMJPtIuz0wgNCGEMWcfqrAJe-f84D7y9j8FdFYtoQde4ptAmCsTkBPtGTHp2TxUYK4ty1m7Q
+
+{
+  "name": "O'ktamov S"
+}
+
+
+### Login
+POST localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username": "uktamov9198@mail.ru",
+  "password": "1111"
+}
