@@ -37,7 +37,18 @@ Content-Type: application/json
 Accept-Language: UZ
 
 {
-  "username": "998911576777"
+  "username": "uktamov9198@mail.ru"
+}
+
+### RESET PASSWORD CONFIRM
+POST localhost:8080/auth/registration/reset-password-confirm
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "username": "uktamov9198@mail.ru",
+  "confirmCode": "68775",
+  "password": "12345"
 }
 
 ### Login
@@ -47,5 +58,5 @@ Accept-Language: UZ
 
 {
   "username": "uktamov9198@mail.ru",
-  "password": "111"
+  "password": "12345"
 }
