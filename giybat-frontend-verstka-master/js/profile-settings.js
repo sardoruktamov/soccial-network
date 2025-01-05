@@ -1,14 +1,15 @@
 window.onload = function () {
-    const userDetailJon = localStorage.getItem("userDetail");
-    if (!userDetailJon) {
+    const userDetail = localStorage.getItem("userDetail");
+    if (!userDetail) {
         return;
     }
 
-    const userDetailObj = JSON.parse(userDetailJon);
+    const userDetailObj = JSON.parse(userDetail);
     console.log(userDetailObj);
 
     document.getElementById("profile_settings_name").textContent = userDetailObj.name;
     document.getElementById("profile_settings_username").textContent = userDetailObj.username;
+
 };
 
 

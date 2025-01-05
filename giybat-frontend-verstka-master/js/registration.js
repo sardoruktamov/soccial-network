@@ -31,7 +31,6 @@ document.getElementById("registrationForm")
         }
 
         const lang = document.getElementById("current-lang").textContent
-        console.log("til tanlandi: ",lang)
 
 
         fetch("http://localhost:8080/auth/registration",{
@@ -48,7 +47,6 @@ document.getElementById("registrationForm")
                     return response.json()
                 }else {
                     errorEmail.style.display = "block";
-                    console.log("elseee-- " + response.data)
                     document.getElementById("phoneEmail").style.borderColor = "red";
                     document.getElementById("phoneEmail").style.color = "red";
                     errorEmail.textContent = "Username already exists";

@@ -6,7 +6,9 @@
 .entrance_container {
     text-align: center;
 }
-
+.entrance_btn__box{
+    align-content: center;
+}
 .entrance_title {
     font-weight: 700;
     font-size: 34px;
@@ -87,7 +89,9 @@
 
 .error-text {
     color: red;
-    font-size: 12px;
+    font-size: 16px;
     margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: center;
     display: none;
 }
