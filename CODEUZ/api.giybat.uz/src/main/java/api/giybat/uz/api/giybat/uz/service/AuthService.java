@@ -4,6 +4,7 @@ import api.giybat.uz.api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.api.giybat.uz.dto.auth.AuthDTO;
 import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.auth.RegistrationDTO;
+import api.giybat.uz.api.giybat.uz.dto.auth.ResetPasswordConfirmDTO;
 import api.giybat.uz.api.giybat.uz.dto.auth.ResetPasswordDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsResentDTO;
 import api.giybat.uz.api.giybat.uz.dto.sms.SmsVerificationDTO;
@@ -49,6 +50,8 @@ public class AuthService {
     private SmsSendService smsSendService;
     @Autowired
     private SmsHistoryService smsHistoryService;
+
+    @Autowired EmailHistoryService emailHistoryService;
 
     public AppResponse<String> registration(RegistrationDTO dto, AppLanguage lang){
 
@@ -179,6 +182,30 @@ public class AuthService {
         }
         String responseMessage = bundleService.getMessage("resent.password.code.sent",lang);
         return new AppResponse<String>(String.format(responseMessage,dto.getUsername()));
+    }
+
+    public AppResponse<String> resetPasswordConfirm(ResetPasswordConfirmDTO dto, AppLanguage lang) {
+        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
+        if (optional.isEmpty()){
+            throw new AppBadException(bundleService.getMessage("profile.not.found",lang));
+        }
+        ProfileEntity profile = optional.get();
+        // checking status
+        if (!profile.getStatus().equals(GeneralStatus.ACTIVE)){
+            throw new AppBadException(bundleService.getMessage("status.error.register.again",lang));
+        }
+    // Usernameni tekshirish email yoki phone ekanligiga
+        if (EmailUtil.isEmail(dto.getUsername())){
+            // send email
+            emailHistoryService.check(dto.getUsername(), dto.getConfirmCode(), lang);
+        }else if (PhoneUtil.isPhone(dto.getUsername())){
+            // send SMS
+            smsHistoryService.check(dto.getUsername(), dto.getConfirmCode(), lang);
+        }
+        // update password
+        profileRepository.updatePassword(profile.getId(), bCryptPasswordEncoder.encode(dto.getPassword()));
+        // return
+        return new AppResponse<String>(bundleService.getMessage("password.changed.successfully",lang));
     }
 
     public ProfileDTO getLoginResponse(ProfileEntity profile){
