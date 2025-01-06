@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/profile-settings.css"/>
     <link rel="stylesheet" href="./css/profile-cabinet.css"/>
     <link rel="stylesheet" href="./css/footer.css"/>
+    <link rel="stylesheet" href="css/simple-modal.css"/>
 
     <title>Profile Update Detail</title>
 </head>
@@ -121,14 +122,12 @@
             <h3 class="paragraph-title">Ma’lumotlar</h3>
             <label class="input_label">Isim</label>
             <input type="text" class="form_input" id="profile_settings_name"/>
-            <span class="error-text" id="nameErrorSpan"></span>
             <button class="btn btn-primary ml-3" onclick="profileDetailUpdate()">Save Changes</button>
         </div>
         <div class="profile-setting_box">
             <h3 class="paragraph-title">Parol</h3>
             <label class="input_label">Hozirgi Parol</label>
             <input type="password" class="form_input" id="profile_settings_current_pswd"/>
-            <span class="error-text" id="currentPasswordErrorSpan"></span>
             <label class="input_label">Yangi Parol</label>
             <input type="password" class="form_input" id="profile_settings_new_pswd"/>
             <button class="btn btn-primary ml-3" onclick="profilePasswordUpdate()">Save Changes</button>
@@ -137,7 +136,7 @@
             <h3 class="paragraph-title">Telefon Raqam/Email</h3>
             <label class="input_label">Telefon raqam / Email</label>
             <input type="text" class="form_input" id="profile_settings_username"/>
-            <button class="btn btn-primary ml-3">Save Changes</button>
+            <button class="btn btn-primary ml-3" onclick="profileUserNameChange()">Save Changes</button>
         </div>
         <!-- Other data end -->
 
@@ -173,6 +172,28 @@
     </div>
 </footer>
 <!-- Footer end -->
+
+<!-- Modal start -->
+<div id="simpleModalId" class="simple-modal">
+    <div class="simple-modal-content">
+        <div class="simple-modal-header">
+            <h3>Confirm username change</h3>
+            <button class="close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="simple-modal-body">
+            <h3 id="confirmModalResultId">Message</h3>
+            <br>
+            <p>Enter Confirm code</p>
+            <br>
+            <input type="text" class="form_input" id="profileUserNameChaneConfirmInputId"/>
+        </div>
+        <div class="simple-modal-footer">
+            <button class="btn btn-close" onclick="closeModal()">Close</button>
+            <button class="btn btn-primary" onclick="profileUserNameChangeConfirm()">Confirm</button>
+        </div>
+    </div>
+</div>
+<!-- Modal end -->
 
 <script src="./js/header.js"></script>
 <script src="./js/profile-settings-edit.js"></script>

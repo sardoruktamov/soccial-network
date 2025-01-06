@@ -51,6 +51,14 @@
     line-height: 20.16px;
 }
 
+.input_label_secondary {
+    color: #334155;
+    display: block;
+    margin-bottom: 14px;
+    font-size: 16px;
+    line-height: 20.16px;
+}
+
 .form_input {
     outline: none;
     border: 1px solid #d4dde8;
@@ -59,3 +67,4 @@
     max-width: 360px;
     width: 100%;
 }
+

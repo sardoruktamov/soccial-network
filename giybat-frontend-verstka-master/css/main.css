@@ -344,6 +344,10 @@ button {
     margin-bottom: 24px;
 }
 
+.mt-2 {
+    margin-top: 32px;
+}
+
 .ml-3 {
     margin-left: 3rem;
 }
@@ -352,6 +356,9 @@ button {
     margin-bottom: 40px;
 }
 
+.mb-1 {
+    margin-bottom: 16px;
+}
 .position-relative {
     position: relative;
 }
