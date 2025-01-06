@@ -96,7 +96,7 @@ public class AuthService {
 
         try{
             Integer profileId = JwtUtil.decodeRegVerToken(token);
-            ProfileEntity profile = profileService.getById(profileId);
+            ProfileEntity profile = profileService.getById(profileId, lang);
             if (profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)){
                 // 1-usulda barcha fieldlarini update qiladi
 //            profile.setStatus(GeneralStatus.ACTIVE);

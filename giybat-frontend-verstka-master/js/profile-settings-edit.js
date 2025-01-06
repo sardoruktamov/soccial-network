@@ -21,14 +21,12 @@ function profileDetailUpdate() {
         window.location.href = "./login.html";
         return;
     }
-    console.log(name)
 
     const body = {
         "name" : name
     }
 
     const lang = document.getElementById("current-lang").textContent
-
 
     fetch("http://localhost:8080/profile/detail",{
         method: 'PUT',
@@ -38,7 +36,6 @@ function profileDetailUpdate() {
             'Authorization': "Bearer " + jwtToken
         },
         body: JSON.stringify(body)
-
     })
         .then(response =>{
             if (response.ok){
@@ -79,10 +76,59 @@ function profileDetailUpdate() {
 function profilePasswordUpdate() {
     const currentPswd = document.getElementById("profile_settings_current_pswd").value
     const newPswd = document.getElementById("profile_settings_new_pswd").value
+    const jwtToken = localStorage.getItem("jwtToken");
+    const currentPasswordErrorSpan = document.getElementById("currentPasswordErrorSpan")
+
     if (!currentPswd || !newPswd) {
         alert("Enter all inputs")
         return;
     }
+    if (!jwtToken) {
+        window.location.href = "./login.html";
+        return;
+    }
+
+    const body = {
+        "currentPswd" : currentPswd,
+        "newPswd" : newPswd
+    }
+
+    const lang = document.getElementById("current-lang").textContent
+
+    fetch("http://localhost:8080/profile/password",{
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept-Language': lang,
+            'Authorization': "Bearer " + jwtToken
+        },
+        body: JSON.stringify(body)
+    })
+        .then(response =>{
+            if (response.ok){
+                return response.json()
+            }else {
+                return Promise.reject(response.text());
+            }
+        })
+        .then(data => {
+            alert(data.data)
+            document.getElementById("profile_settings_current_pswd").value = '';
+            document.getElementById("profile_settings_new_pswd").value = '';
+
+            currentPasswordErrorSpan.style.display = "none";
+            document.getElementById("currentPasswordErrorSpan").style.borderColor = "#ddd";
+            document.getElementById("currentPasswordErrorSpan").style.color = "";
+        })
+        .catch(error =>{
+            error.then(errorMessage =>{
+                console.log(errorMessage.toString());
+                currentPasswordErrorSpan.style.display = "block";
+                document.getElementById("currentPasswordErrorSpan").style.color = "red";
+                currentPasswordErrorSpan.textContent = errorMessage.toString();
+            })
+        })
+
 }
 
 function profileUserNameChange() {

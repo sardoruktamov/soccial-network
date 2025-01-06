@@ -50,7 +50,6 @@ function resetPasswordConfirm() {
         })
         .catch(error =>{
             error.then(errorMessage =>{
-                console.log(errorMessage.toString() + "-----------------------------")
                 confirm_codeErrorSpan.style.display = "block";
                 confirm_codeErrorSpan.textContent = errorMessage.toString();
             })
