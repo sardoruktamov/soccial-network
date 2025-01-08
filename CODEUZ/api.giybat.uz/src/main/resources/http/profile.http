@@ -19,11 +19,31 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1I
   "newPswd" : "12345"
 }
 
+### Profile username update
+PUT localhost:8080/profile/username
+Content-Type: application/json
+Accept-Language: UZ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXJkb3JiZWsudWt0YW1vdi4xQGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxMjAiLCJpYXQiOjE3MzYyNjYzNTUsImV4cCI6MTczNjM1Mjc1NX0.taBYExzffG_bWxtfEgcpn8UTZhlXduqouDGroLjEUkbRbUWIktZ9Nx5bOCaC0_8r_LBx1AkNnA36SronsK0dEA
+
+{
+  "username" : "uktamov9198@mail.ru"
+}
+
+### Profile username update Confirm
+PUT localhost:8080/profile/username/confirm
+Content-Type: application/json
+Accept-Language: UZ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXJkb3JiZWsudWt0YW1vdi4xQGdtYWlsLmNvbSIsInJvbGVzIjoiUk9MRV9VU0VSIiwiaWQiOiIxMjAiLCJpYXQiOjE3MzYyNjYzNTUsImV4cCI6MTczNjM1Mjc1NX0.taBYExzffG_bWxtfEgcpn8UTZhlXduqouDGroLjEUkbRbUWIktZ9Nx5bOCaC0_8r_LBx1AkNnA36SronsK0dEA
+
+{
+  "code" : "22434"
+}
+
 ### Login
 POST localhost:8080/auth/login
 Content-Type: application/json
 
 {
-  "username": "uktamov9198@mail.ru",
+  "username": "sardorbek.uktamov.1@gmail.com",
   "password": "12345"
 }
