@@ -97,7 +97,7 @@ function resendSms() {
         })
         .then(data => {
             console.log(data)
-            alert(data.data)
+            alert(data.message)
         })
         .catch(error =>{
             error.then(errorMessage =>{

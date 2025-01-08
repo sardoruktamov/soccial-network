@@ -34,7 +34,7 @@ function resetPassword() {
             }
         })
         .then(data => {
-            alert(data.data)
+            alert(data.message)
             usernameErrorSpan.style.display = "none";
             document.getElementById("username").style.borderColor = "#ddd";
             document.getElementById("username").style.color = "";

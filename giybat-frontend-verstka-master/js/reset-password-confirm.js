@@ -39,7 +39,7 @@ function resetPasswordConfirm() {
             }
         })
         .then(data => {
-            alert(data.data)
+            alert(data.message)
             confirm_codeErrorSpan.style.display = "none";
             document.getElementById("confirmCodeValue").style.borderColor = "#ddd";
             document.getElementById("confirmCodeValue").style.color = "";
