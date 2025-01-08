@@ -50,7 +50,6 @@ public class AuthService {
     private SmsSendService smsSendService;
     @Autowired
     private SmsHistoryService smsHistoryService;
-
     @Autowired EmailHistoryService emailHistoryService;
 
     public AppResponse<String> registration(RegistrationDTO dto, AppLanguage lang){

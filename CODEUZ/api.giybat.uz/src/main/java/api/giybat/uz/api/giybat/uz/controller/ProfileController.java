@@ -1,6 +1,7 @@
 package api.giybat.uz.api.giybat.uz.controller;
 
 import api.giybat.uz.api.giybat.uz.dto.AppResponse;
+import api.giybat.uz.api.giybat.uz.dto.CodeConfirmDTO;
 import api.giybat.uz.api.giybat.uz.dto.PostDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfileDetailUpdateDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfilePasswordUpdateDTO;
@@ -40,6 +41,13 @@ public class ProfileController {
     public ResponseEntity<AppResponse<String>> updateUsername(@Valid @RequestBody ProfileUsernameUpdateDTO dto,
                                                               @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
         AppResponse<String> res = profileService.updateUsername(dto, lang);
+        return ResponseEntity.ok(res);
+    }
+
+    @PutMapping("/username/confirm")
+    public ResponseEntity<AppResponse<String>> updateUsernameConfirm(@Valid @RequestBody CodeConfirmDTO dto,
+                                                              @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
+        AppResponse<String> res = profileService.updateUsernameConfirm(dto, lang);
         return ResponseEntity.ok(res);
     }
 }

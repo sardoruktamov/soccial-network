@@ -29,4 +29,13 @@ public interface ProfileRepository extends CrudRepository<ProfileEntity,Integer>
     @Query("update ProfileEntity set name =?2 where id =?1")
     void updateDetail(Integer id, String name);
 
+    @Modifying
+    @Transactional
+    @Query("update ProfileEntity set tempUsername =?2 where id =?1")
+    void updateTempUsername(Integer id, String tempUsername);
+
+    @Modifying
+    @Transactional
+    @Query("update ProfileEntity set username =?2 where id =?1")
+    void updateUsername(Integer id, String username);
 }

@@ -110,6 +110,42 @@ public class EmailSendingService {
         checkAndSendMimeEmail(email, code, subject, body, lang);
     }
 
+    public void sendChangeUsernameEmail(String email, AppLanguage lang){
+        String subject = "Username change confirm";
+        String code = RandomUtil.getRandomSmsCode();
+        String body = "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <title>Title</title>\n" +
+                "    <style>\n" +
+                "        a{\n" +
+                "            padding: 10px 30px;\n" +
+                "            display: inline-block;\n" +
+                "        }\n" +
+                "        .tugma{\n" +
+                "          text-decoration: none;\n" +
+                "            color: darkslategrey;\n" +
+                "            background-color: wheat;\n" +
+                "            border-radius: 5px;\n" +
+                "        }\n" +
+                "        .tugma:hover{\n" +
+                "            color: white;\n" +
+                "            background-color: darkgray;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<h1>Loginni o'zgartirish</h1>\n" +
+                "<p style=`color: red`>loginni o'zgartirish uchun tasdiqlash kodi: <b>%s</b></p>\n" +
+                "</body>\n" +
+                "</html>";
+
+        body = String.format(body,code);
+
+        checkAndSendMimeEmail(email, code, subject, body, lang);
+    }
+
     private void checkAndSendMimeEmail(String email,String code, String subject, String body, AppLanguage lang){
         // check
         Long count = emailHistoryService.getEmailCount(email);
