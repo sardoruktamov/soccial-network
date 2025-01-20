@@ -37,6 +37,8 @@ public class SpringConfig {
     // qilishlari uchun array yaratilindi, ya`ni doFilterInternal methodiga murojaat qilmasligi uchun.
     public static final String[] AUTH_WHITELIST = {
             "/auth/**",
+            "attach/upload",
+            "attach/open/**"
     };
 
     @Bean

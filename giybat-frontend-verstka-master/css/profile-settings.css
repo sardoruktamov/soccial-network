@@ -4,7 +4,9 @@
     line-height: 28.8px;
     margin-bottom: 24px;
 }
-
+.display-none{
+    display: none;
+}
 .profile_settings_photo {
     border-radius: 30px;
     max-width: 220px;
