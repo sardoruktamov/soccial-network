@@ -5,6 +5,7 @@ import api.giybat.uz.api.giybat.uz.dto.CodeConfirmDTO;
 import api.giybat.uz.api.giybat.uz.dto.PostDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfileDetailUpdateDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfilePasswordUpdateDTO;
+import api.giybat.uz.api.giybat.uz.dto.profile.ProfilePhotoUpdateDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfileUsernameUpdateDTO;
 import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.api.giybat.uz.service.ProfileService;
@@ -27,6 +28,13 @@ public class ProfileController {
     public ResponseEntity<AppResponse<String>> updateDetail(@Valid @RequestBody ProfileDetailUpdateDTO dto,
                                                       @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
         AppResponse<String> res = profileService.updateDetail(dto, lang);
+        return ResponseEntity.ok(res);
+    }
+
+    @PutMapping("/photo")
+    public ResponseEntity<AppResponse<String>> updatePhoto(@Valid @RequestBody ProfilePhotoUpdateDTO dto,
+                                                            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
+        AppResponse<String> res = profileService.updatePhoto(dto.getAttachId(), lang);
         return ResponseEntity.ok(res);
     }
 
