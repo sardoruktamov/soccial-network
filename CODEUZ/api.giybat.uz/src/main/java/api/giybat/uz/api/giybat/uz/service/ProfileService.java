@@ -4,6 +4,7 @@ import api.giybat.uz.api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.api.giybat.uz.dto.CodeConfirmDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfileDetailUpdateDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfilePasswordUpdateDTO;
+import api.giybat.uz.api.giybat.uz.dto.profile.ProfilePhotoUpdateDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfileUsernameUpdateDTO;
 import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
@@ -104,6 +105,15 @@ public class ProfileService {
 
         return new AppResponse<>(jwt, bundleService.getMessage("change.username.succes", lang));
     }
+
+    public AppResponse<String> updatePhoto(String attachId, AppLanguage lang) {
+        Integer userId = SpringSecurityUtil.getCurrentUserId();
+        ProfileEntity profile = getById(userId, lang);
+        profile.setPhotoId(attachId);
+        profileRepository.updatePhoto(userId,attachId);
+        return null;
+    }
+
     public ProfileEntity getById(int id, AppLanguage lang){
         // 1-usul
 //        Optional<ProfileEntity> optional = profileRepository.findByIdAndVisibleTrue(id);
