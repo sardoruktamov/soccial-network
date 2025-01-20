@@ -1,0 +1,11 @@
+### Upload Attach
+POST http://localhost:8080/attach/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="Developer.jpg"
+
+< E:\PHOTOS\Developer.jpg
+
+### Open Attach
+PUT http://localhost:8080/attach/open/0b46f728-1a13-4c73-be83-8d2ee3dede0c.jpg
