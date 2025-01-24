@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class ProfilePhotoUpdateDTO {
 
-    @NotBlank(message = "Name required")
-    private String attachId;
+    @NotBlank(message = "Photo required")
+    private String photoId;
 }
