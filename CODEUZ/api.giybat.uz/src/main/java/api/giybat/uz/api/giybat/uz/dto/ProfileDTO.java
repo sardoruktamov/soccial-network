@@ -15,4 +15,5 @@ public class ProfileDTO {
     private String username;
     private List<ProfileRole> roleList;
     private String jwt;
+    private AttachDTO photo;
 }
