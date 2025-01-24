@@ -6,6 +6,7 @@ import api.giybat.uz.api.giybat.uz.dto.profile.ProfileDetailUpdateDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfilePasswordUpdateDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfilePhotoUpdateDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfileUsernameUpdateDTO;
+import api.giybat.uz.api.giybat.uz.entity.AttachEntity;
 import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.api.giybat.uz.enums.ProfileRole;
@@ -43,9 +44,10 @@ public class ProfileService {
     private SmsHistoryService smsHistoryService;
     @Autowired
     private EmailHistoryService emailHistoryService;
-
     @Autowired
     private ProfileRoleRepository profileRoleRepository;
+    @Autowired
+    private AttachService attachService;
 
     public AppResponse<String> updateDetail(ProfileDetailUpdateDTO dto, AppLanguage lang){
         Integer userId = SpringSecurityUtil.getCurrentUserId();
@@ -106,13 +108,17 @@ public class ProfileService {
         return new AppResponse<>(jwt, bundleService.getMessage("change.username.succes", lang));
     }
 
-    public AppResponse<String> updatePhoto(String attachId, AppLanguage lang) {
+    public AppResponse<String> updatePhoto(String photoId, AppLanguage lang) {
         Integer userId = SpringSecurityUtil.getCurrentUserId();
-        ProfileEntity profile = getById(userId, lang);
-        profile.setPhotoId(attachId);
-        profileRepository.updatePhoto(userId,attachId);
-        return null;
+        ProfileEntity profile = getById(userId,lang);
+        profileRepository.updatePhoto(userId,photoId);
+        if (profile.getPhotoId() != null && !profile.getPhotoId().equals(photoId)){
+            attachService.delete(profile.getPhotoId()); // delete old img
+        }
+        return new AppResponse<>(bundleService.getMessage("change.photo.succes", lang));
     }
+
+
 
     public ProfileEntity getById(int id, AppLanguage lang){
         // 1-usul

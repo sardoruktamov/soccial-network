@@ -51,6 +51,8 @@ public class AuthService {
     @Autowired
     private SmsHistoryService smsHistoryService;
     @Autowired EmailHistoryService emailHistoryService;
+    @Autowired
+    private AttachService attachService;
 
     public AppResponse<String> registration(RegistrationDTO dto, AppLanguage lang){
 
@@ -213,6 +215,7 @@ public class AuthService {
         response.setUsername(profile.getUsername());
         response.setRoleList(profileRoleRepository.getAllRolesListByProfileId(profile.getId()));
         response.setJwt(JwtUtil.encode(profile.getUsername(), profile.getId(),response.getRoleList()));        // jwt
+        response.setPhoto(attachService.attachDTO(profile.getPhotoId()));
         return response;
     }
 

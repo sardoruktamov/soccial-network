@@ -124,6 +124,17 @@ public class AttachService {
         return attachDTO;
     }
 
+    public boolean delete(String id) {
+        AttachEntity entity = getEntity(id);
+        attachRepository.changeVisible(id);
+        File file = new File(getPath(entity));
+        boolean b = false;
+        if (file.exists()) {
+            b = file.delete();
+        }
+        return b;
+    }
+
     public AttachEntity getEntity(String id) {
         Optional<AttachEntity> optional = attachRepository.findById(id);
         if (optional.isEmpty()) {
@@ -136,8 +147,19 @@ public class AttachService {
         return attachUrl + "/open/" + fileName;
     }
 
+
+
     private String getPath(AttachEntity entity) {
         return folderName + "/" + entity.getPath() + "/" + entity.getId();
+    }
+
+    public AttachDTO attachDTO(String photoId) {
+        if (photoId == null) return null;
+        
+        AttachDTO dto = new AttachDTO();
+        dto.setId(photoId);
+        dto.setUrl(openURL(photoId));
+        return dto;
     }
 }
 
