@@ -8,6 +8,10 @@ window.onload = function () {
 
     document.getElementById("profile_settings_name").value = userDetailObj.name;
     document.getElementById("profile_settings_username").value = userDetailObj.username;
+
+    if (userDetailObj.photo){
+        document.getElementById("profile_settings_photo").src = userDetailObj.photo.url;
+    }
 };
 
 function profileDetailUpdate() {
@@ -305,7 +309,6 @@ function uploadImage(){
                 console.log('Success:', data);
                 if(data.id){
                     updateProfileImage(data.id); // profile update image
-
                     const userDetailJon = localStorage.getItem("userDetail");
                     const userDetail = JSON.parse(userDetailJon);
                     userDetail.photo = {};
@@ -320,4 +323,48 @@ function uploadImage(){
                 console.error('Error:', error);
             });
     }
+}
+
+function updateProfileImage(photoId){
+    const jwtToken = localStorage.getItem("jwtToken");
+    const nameErrorSpan = document.getElementById("nameErrorSpan")
+    if (!photoId ) {
+        return;
+    }
+    if (!jwtToken) {
+        window.location.href = "./login.html";
+        return;
+    }
+
+    const body = {
+        "photoId" : photoId
+    }
+
+    const lang = document.getElementById("current-lang").textContent
+
+    fetch("http://localhost:8080/profile/photo",{
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept-Language': lang,
+            'Authorization': "Bearer " + jwtToken
+        },
+        body: JSON.stringify(body)
+    })
+        .then(response =>{
+            if (response.ok){
+                return response.json()
+            }else {
+                return Promise.reject(response.text());
+            }
+        })
+        .then(data => {
+            document.getElementById('profile_settings_upload_img_btn_id').style.display = 'none';
+            alert(data.message)
+        })
+        .catch(error =>{
+            error.then(errorMessage =>{
+                console.log(errorMessage.toString());
+            })
+        })
 }
