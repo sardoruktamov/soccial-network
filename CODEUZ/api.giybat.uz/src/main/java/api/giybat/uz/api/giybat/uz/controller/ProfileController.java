@@ -34,7 +34,7 @@ public class ProfileController {
     @PutMapping("/photo")
     public ResponseEntity<AppResponse<String>> updatePhoto(@Valid @RequestBody ProfilePhotoUpdateDTO dto,
                                                             @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang){
-        AppResponse<String> res = profileService.updatePhoto(dto.getAttachId(), lang);
+        AppResponse<String> res = profileService.updatePhoto(dto.getPhotoId(), lang);
         return ResponseEntity.ok(res);
     }
 
