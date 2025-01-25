@@ -10,6 +10,7 @@ function toggleLanguageDropdown() {
 // Set language function
 function setSelectedLanguage(lang) {
     document.getElementById("current-lang").textContent = lang;
+    localStorage.setItem("current-lang",lang);
     toggleLanguageDropdown(); // Закрыть dropdown после выбора
 }
 
@@ -41,6 +42,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // select language
+    let currentLang = localStorage.getItem('current-lang');
+    if (!currentLang){
+        currentLang = "UZ";
+    }
+    localStorage.setItem("current-lang", currentLang)
+    if (currentLang){
+        document.getElementById("current-lang").textContent = currentLang;
+    }
+
     //Show profile menu on header
     const userDetailStr = localStorage.getItem("userDetail");
     if (userDetailStr === null || userDetailStr === undefined || userDetailStr === '') {
@@ -49,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const userDetail = JSON.parse(userDetailStr);
     const userName = userDetail.name;
+    const userImg = userDetail.photo.url;
 
     const loginBtn = document.getElementById("header_btn");
     loginBtn.style.display = "none";
@@ -57,6 +69,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const headerUserNameSpan = document.getElementById("header_user_name_id");
     headerUserNameSpan.textContent = userName;
+
+    if (userDetail.photo){
+        const headerUserImage = document.getElementById("header_user_image_id");
+        headerUserImage.src = userImg;
+    }
 
 
 });

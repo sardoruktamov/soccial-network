@@ -316,7 +316,7 @@ function uploadImage(){
                     userDetail.photo.url = data.url;
                     localStorage.setItem("userDetail", JSON.stringify(userDetail));
 
-                    // document.getElementById("header_user_image_id").src =data.url;
+                    document.getElementById("header_user_image_id").src =data.url;
                 }
             })
             .catch(error => {
