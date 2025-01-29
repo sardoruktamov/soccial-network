@@ -38,7 +38,10 @@ public class SpringConfig {
     public static final String[] AUTH_WHITELIST = {
             "/auth/**",
             "attach/upload",
-            "attach/open/**"
+            "attach/open/**",
+            "swagger-ui/**",
+            "/v3/api-docs",
+            "/v3/api-docs/**"
     };
 
     @Bean
