@@ -10,6 +10,7 @@ import api.giybat.uz.api.giybat.uz.dto.profile.ProfileUsernameUpdateDTO;
 import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.api.giybat.uz.service.ProfileService;
 import api.giybat.uz.api.giybat.uz.util.SpringSecurityUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/profile")
 @Slf4j
+@Tag(name = "ProfileController", description = "API list for working with Profile")
 public class ProfileController {
 
     @Autowired
