@@ -17,6 +17,7 @@ import api.giybat.uz.api.giybat.uz.util.EmailUtil;
 import api.giybat.uz.api.giybat.uz.util.JwtUtil;
 import api.giybat.uz.api.giybat.uz.util.PhoneUtil;
 import api.giybat.uz.api.giybat.uz.util.SpringSecurityUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ProfileService {
 
     @Autowired
@@ -124,12 +126,14 @@ public class ProfileService {
         // 1-usul
 //        Optional<ProfileEntity> optional = profileRepository.findByIdAndVisibleTrue(id);
 //        if(optional.isEmpty()){
+//            log.error("Profile not found: {}",id);
 //            throw new AppBadException("Profile not found");
 //        }
 //        return optional.get();
         // 2-usul
         return profileRepository.findByIdAndVisibleTrue(id).orElseThrow( () -> {
-        throw new AppBadException(bundleService.getMessage("profile.not.found", lang));
+            log.error("Profile not found: {}",id);
+            throw new AppBadException(bundleService.getMessage("profile.not.found", lang));
         });
     }
 
