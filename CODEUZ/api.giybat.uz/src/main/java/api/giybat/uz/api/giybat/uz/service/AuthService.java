@@ -66,6 +66,7 @@ public class AuthService {
                 // 2-usul
                 //send sms/email orqali ro'yxatdan o'tishini davom ettirish
             }else {
+                log.warn("Profile already exists with name {}", dto.getUsername());
                 throw new AppBadException(bundleService.getMessage("email.phone.exist", lang));
             }
         }
@@ -108,12 +109,14 @@ public class AuthService {
             }
         }catch (JwtException e){
         }
+        log.warn("Registration email verification failed {}", token);
         throw new AppBadException(bundleService.getMessage("verification.failed",lang));
     }
 
     public ProfileDTO login(AuthDTO dto, AppLanguage lang){
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
         if (optional.isEmpty()){
+            log.warn("Username or Password wrong {}", dto.getUsername());
             throw new AppBadException(bundleService.getMessage("username.password.wrong",lang));
         }
         ProfileEntity profile = optional.get();
@@ -121,6 +124,7 @@ public class AuthService {
             throw new AppBadException(bundleService.getMessage("username.password.wrong",lang));
         }
         if (!profile.getStatus().equals(GeneralStatus.ACTIVE)){
+            log.warn("Wrong status: {}", dto.getUsername());
             throw new AppBadException(bundleService.getMessage("status.error.register.again",lang));
         }
 
@@ -131,11 +135,13 @@ public class AuthService {
     public ProfileDTO registrationSmsVerification(SmsVerificationDTO dto, AppLanguage lang) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getPhoneNumber());
         if (optional.isEmpty()){
+            log.warn("Verification failed: {}", dto.getPhoneNumber());
             throw new AppBadException(bundleService.getMessage("profile.not.found",lang));
         }
         ProfileEntity profile = optional.get();
         // checking status
         if (!profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)){
+            log.warn("Wrong status: {}", dto.getPhoneNumber());
             throw new AppBadException(bundleService.getMessage("verification.failed",lang));
         }
         // checking sms code
@@ -150,11 +156,13 @@ public class AuthService {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getPhoneNumber());
 
         if (optional.isEmpty()){
+            log.warn("Verification failed: {}", dto.getPhoneNumber());
             throw new AppBadException(bundleService.getMessage("profile.not.found",lang));
         }
         ProfileEntity profile = optional.get();
         // checking status
         if (!profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)){
+            log.warn("Wrong status: {}", dto.getPhoneNumber());
             throw new AppBadException(bundleService.getMessage("verification.failed",lang));
         }
         smsSendService.sendRegistrationSms(dto.getPhoneNumber(), lang);
@@ -165,11 +173,13 @@ public class AuthService {
 
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
         if (optional.isEmpty()){
+            log.warn("Profile not  found: {}", dto.getUsername());
             throw new AppBadException(bundleService.getMessage("profile.not.found",lang));
         }
         ProfileEntity profile = optional.get();
 
         if (!profile.getStatus().equals(GeneralStatus.ACTIVE)){
+            log.warn("Wrong status: {}", dto.getUsername());
             throw new AppBadException(bundleService.getMessage("status.error.register.again",lang));
         }
 
@@ -188,11 +198,13 @@ public class AuthService {
     public AppResponse<String> resetPasswordConfirm(ResetPasswordConfirmDTO dto, AppLanguage lang) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
         if (optional.isEmpty()){
+            log.warn("Profile not  found: {}", dto.getUsername());
             throw new AppBadException(bundleService.getMessage("profile.not.found",lang));
         }
         ProfileEntity profile = optional.get();
         // checking status
         if (!profile.getStatus().equals(GeneralStatus.ACTIVE)){
+            log.warn("Wrong status: {}", dto.getUsername());
             throw new AppBadException(bundleService.getMessage("status.error.register.again",lang));
         }
     // Usernameni tekshirish email yoki phone ekanligiga
