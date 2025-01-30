@@ -10,4 +10,10 @@ public class SmsResentDTO {
     @NotBlank(message = "Phone number required")
     private String phoneNumber;
 
+    @Override
+    public String toString() {
+        return "SmsResentDTO{" +
+                "phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }
