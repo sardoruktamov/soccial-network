@@ -11,4 +11,11 @@ public class SmsVerificationDTO {
     private String phoneNumber;
     @NotBlank(message = "Sms code required")
     private String code;
+
+    @Override
+    public String toString() {
+        return "SmsVerificationDTO{" +
+                "phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
 }
