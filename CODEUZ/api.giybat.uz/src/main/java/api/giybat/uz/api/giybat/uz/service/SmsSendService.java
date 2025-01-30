@@ -62,6 +62,7 @@ public class SmsSendService {
         // check
         Long count = smsHistoryService.getSmsCount(phoneNuber);
         if (count >= smsLimit){
+            log.warn("SMS limit reached. Phone: " + phoneNuber);
             throw new AppBadException(bundleService.getMessage("you.can.send.one.sms.code",lang));
         }
         SmsSendResponseDTO result = sendSms(phoneNuber, message, lang);
@@ -107,12 +108,12 @@ public class SmsSendService {
                     entity,
                     SmsSendResponseDTO.class);//smsUrlga POST request yubor ENTITYni va Stringga konvert qil
 
-            System.out.println(response.toString());
             System.out.println("-------------SMS yuborildiiiii---------------");
             SmsSendResponseDTO responseDTO = new SmsSendResponseDTO();
             return response.getBody();
         }catch (RuntimeException e){
             e.printStackTrace();
+            log.error("Send SMS phone: {}, message: {}, ERROR: {}", phoneNuber,message, e.getMessage());
             throw new AppBadException(bundleService.getMessage("error.sending.sms",lang));
 
         }
@@ -163,6 +164,7 @@ public class SmsSendService {
             System.out.println(response);
             return response.getData().getToken();
         } catch (RuntimeException e) {
+            log.error("Get token from provider. account: {}, ERROR: {}", accountLogin, e.getMessage());
             throw new RuntimeException(e);
         }
 
