@@ -2,14 +2,12 @@ package api.giybat.uz.api.giybat.uz.controller;
 
 import api.giybat.uz.api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.api.giybat.uz.dto.CodeConfirmDTO;
-import api.giybat.uz.api.giybat.uz.dto.PostDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfileDetailUpdateDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfilePasswordUpdateDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfilePhotoUpdateDTO;
 import api.giybat.uz.api.giybat.uz.dto.profile.ProfileUsernameUpdateDTO;
 import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.api.giybat.uz.service.ProfileService;
-import api.giybat.uz.api.giybat.uz.util.SpringSecurityUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
