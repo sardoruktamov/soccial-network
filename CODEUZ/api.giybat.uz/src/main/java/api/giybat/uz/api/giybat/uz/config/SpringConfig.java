@@ -4,6 +4,7 @@ import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -41,7 +42,8 @@ public class SpringConfig {
             "attach/open/**",
             "swagger-ui/**",
             "/v3/api-docs",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+            "/posts/public/**"
     };
 
     @Bean
@@ -68,6 +70,7 @@ public class SpringConfig {
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
                     .requestMatchers(AUTH_WHITELIST).permitAll() //AUTH_WHITELIST ni o'rnida "/auth/**" bolishi mumkin edi
+                    .requestMatchers(HttpMethod.GET,"/posts/public/*").permitAll()
                     .anyRequest()
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
