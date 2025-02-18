@@ -1,20 +1,57 @@
 ### Post create
-POST localhost:8080/posts/create
+POST localhost:8080/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTiIsImlkIjoiNyIsImlhdCI6MTczNDE5ODUyMywiZXhwIjoxNzM0Mjg0OTIzfQ.8LDzbEW88aB4Qh5p9F2cbmkhsUmw7PX_Y_f8rKwnDyVOtFu_lFzy9uIlvTOwfU6kPz66GIU0ZWIv2AcGmsFDPA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MzA3NjY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMTIwIiwiaWF0IjoxNzM5MTE4NjAyLCJleHAiOjE3MzkyMDUwMDJ9.R1H69DRQEz62iKORwf8tqHmE2Oi-4gzrNSOqBVBDh-aWRFsZa1NCUX1gra1GchD11VmuMHpURCOuc9xOHYZJYQ
 
 {
-  "name": "Olimov Olim",
-  "username": "uktamov9198@mail.ru",
-  "password": "12345"
+  "title": "2-user-93 6777 yaratgan POST",
+  "content": "Test uchun user-93 6777 yaratgan POST sf sdfsd fsd fw ef wef sdf",
+  "photo": {
+    "id": "a9be4a98-cd82-4eb7-acfa-0099ba4f6409.jpg"
+  }
+}
+
+### Post UPDATE
+PUT localhost:8080/posts/436cba08-bd30-4d45-ab74-b76a9b9aed72
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3MzkxMTkyNTksImV4cCI6MTczOTIwNTY1OX0.FSqt3gkCvChgCOkuZrkEkvL3LiVo1zfimLrzdTLSRvajV5rEtKUs4OBd8Kd1pm9NtCQQ0Q2RexzsYYZiUcOGOQ
+
+{
+  "title": "ADMIN UPDATE-user-93 6777 yaratgan POST",
+  "content": "ADMIN UPDATE-content Test uchun user-93 6777 yaratgan POST sf sdfsd fsd fw ef wef sdf",
+  "photo": {
+    "id": "a9be4a98-cd82-4eb7-acfa-0099ba4f6409.jpg"
+  }
+}
+
+### Profile Post List
+GET localhost:8080/posts/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MzA3NjY3NzciLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMTIwIiwiaWF0IjoxNzM5MTE4NjAyLCJleHAiOjE3MzkyMDUwMDJ9.R1H69DRQEz62iKORwf8tqHmE2Oi-4gzrNSOqBVBDh-aWRFsZa1NCUX1gra1GchD11VmuMHpURCOuc9xOHYZJYQ
+
+### Filter Post
+POST localhost:8080/posts/public/filter
+Content-Type: application/json
+
+{
+  "query": "user"
 }
 
 
-### Login
+### Login -ADMIN
 POST localhost:8080/auth/login
 Content-Type: application/json
 
 {
   "username": "uktamov9198@mail.ru",
+  "password": "12345"
+}
+
+### Login -USER
+POST localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username": "998930766777",
   "password": "12345"
 }
