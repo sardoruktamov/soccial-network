@@ -23,8 +23,8 @@
                 </div>
                 <div class="header_block">
                     <div class="header_box__input">
-                        <input type="text" placeholder="Qidirish" class="header_input"/>
-                        <button class="header_search"></button>
+                        <input type="text" placeholder="Qidirish" class="header_input" id="header-search-inputId"/>
+                        <button class="header_search" id="header-search-buttonId"></button>
                     </div>
                     <div class="dropdown">
                         <div class="dropdown_toggle" onclick="toggleLanguageDropdown()">
@@ -47,12 +47,8 @@
                         </a>
                         <div class="header_entrance" id="header_entrance">
                             <button class="header_entrance__toggle">
-                                <span class="icon user-icon">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                       fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 9a5 5 0 0 0-4.546 2.916A2 2 0 0 0 5.07 14h5.858a2 2 0 0 0 1.616-2.084A5 5 0 0 0 8 9z"/>
-                                  </svg>
-                                </span>
+                                <img id="header_user_image_id" class="header_user_image" src="./images/default-user.png"
+                                     alt="">
                                 <span id="header_user_name_id">UserName</span>
                             </button>
                             <ul class="header_entrance__menu">
@@ -93,44 +89,58 @@
     <section class="post">
         <div class="container">
             <div class="post_container">
-                <p class="post_text">Orqaga qaytish</p>
-                <h2 class="post_title">Yanig G'iybat yaratish</h2>
+                <a href="./profile-post-list.html"><span class="post_text">Orqaga qaytish</span></a>
+                <h2 class="post_title" id="post_page_title_id">Yanig G'iybat yaratish</h2>
                 <div class="post_block">
-                    <h3 class="post_input_name">Post uchun rasmlar</h3>
+                    <h3 class="post_input_name">Post uchun rasm</h3>
                     <p class="post_text__inner">
-                        Diqqat! 4 ta gacha rasm joylash mumkin! Rasmlar razmeri 1mb dan
-                        oshishi mumkin emas.
+                        Diqqat! 1-ta rasm joylash mumkin! Rasmlar razmeri 1mb dan oshishi mumkin emas.
                     </p>
+
+                    <!--   Photo -->
                     <div class="post_block__pictures">
-                        <div class="post_img__box">
-                            <button class="post_basket__btn"></button>
-                            <img src="./images/book7.png" class="post_img"/>
-                        </div>
-                        <div class="post_img__box add_content">
-                            <button class="post_additions__btn add_content__btn">
+                        <div class="post_img__box add_content" id="post_image_block">
+                            <input type="file" id="post_image_id" accept="image/*" onchange="previewImage(event)"
+                                   hidden/>
+                            <label for="post_image_id" class="post_additions__btn add_content__btn">
                                 <span class="post_span__vertical"></span>
                                 <span class="post_span__horizontal"></span>
-                            </button>
+                            </label>
                         </div>
                     </div>
-                    <p class="post_text__sub">
-                        *Birinchida turgan rasm Cover rasm bo’lib ishlatiladi!
-                    </p>
+                    <!--   Photo end -->
+
+                    <!--   Title -->
                     <div class="post_form">
                         <h3 class="post_input_name">Sarlavha *</h3>
                         <div class="post_textarea__box">
-                            <input class="post_input"/>
+                            <input class="post_input" id="post_title_id"/>
                         </div>
                     </div>
+                    <!--   Title end -->
+
+                    <!--   Content -->
                     <div class="post_content">
                         <h3 class="post_input_name">Post matni *</h3>
                         <div class="post_textarea__box">
-                            <textarea class="post_textarea post_textarea2"></textarea>
+                            <textarea id="post_content_id" class="post_textarea post_textarea2"></textarea>
                         </div>
                     </div>
-                    <div class="post_btn__block">
-                        <button class=" post_btn post_save">G’iybat yaratish</button>
+                    <!--   Content end -->
+
+                    <!--   Button -->
+                    <div class="post_btn__block" id="post_create_btn_group">
+                        <button class=" post_btn post_save" onclick="createPost()">G’iybat yaratish</button>
                     </div>
+
+                    <div class="post_btn__block display-none" id="post_update_btn_group">
+                        <button class="post_btn post_delete" onclick="deletePost()">O’chirish</button>
+                        <button class="post_btn post_update margin-x1" onclick="updatePost()">O’zgarishlarni saqlash</button>
+                        <a class="post_btn post_btn_default" href="./profile-post-list.html">Bekor qilish</a>
+                    </div>
+
+                    <!--   Button end -->
+
                 </div>
             </div>
         </div>
@@ -168,6 +178,7 @@
 <!-- Footer end -->
 
 <script src="./js/header.js"></script>
+<script src="./js/post-create.js"></script>
 
 </body>
 </html>

@@ -359,6 +359,59 @@ button {
 .mb-1 {
     margin-bottom: 16px;
 }
+
 .position-relative {
     position: relative;
+}
+
+.display-none {
+    display: none;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-end {
+    justify-content: end;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.hover-pointer:hover {
+    cursor: pointer;
+}
+
+/* Popup container */
+#popup-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+/* Individual popup styling */
+.popup {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.popup.hide {
+    opacity: 0;
+    transform: translateX(100px);
+}
+
+.width-100 {
+    width: 100%;
 }

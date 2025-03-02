@@ -30,6 +30,17 @@
     position: relative;
 }
 
+.pagination_btn_dots {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22.4px;
+    color: #334155;
+    position: relative;
+}
+.pagination_btn_dots:hover {
+  cursor: default;
+}
+
 .pagination-back {
     width: 59px;
     height: 22px;

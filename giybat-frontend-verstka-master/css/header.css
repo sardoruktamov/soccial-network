@@ -5,11 +5,6 @@
   background-color: #fff;
   border-bottom: 1px solid #d4d4d4;
 }
-.header_user_image{
-  border-radius: 25px 25px 25px 25px;
-  width: 24px;
-  height: 24px;
-}
 
 .header_container {
   display: -webkit-box;
@@ -276,6 +271,10 @@
   display: block;
 }
 
+.header_user_image{
+  width: 24px;
+  height: 24px;
+}
 /* Menu end*/
 
 .header_entrance__block {
