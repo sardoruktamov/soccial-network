@@ -146,19 +146,22 @@ function getPostById(idParam) {
         .then(response => {
             if (response.ok) {
                 return response.json();
-                console.log("iiiiiffffffffffff----151-------");
             }else {
                 return Promise.reject(response.text());
-                console.log("iiiiiffffffffffff----154-------");
             }
         })
         .then(data => {
             console.log(data)
-            console.log("iIJOBIIIYYY iiiiffffffffffff----159-------");
+            //photo
+            if(data.photo && data.photo.url) {
+                const imgContainer = document.getElementById('post_image_block');
+                imgContainer.style.backgroundImage = 'url(' + data.photo.url + ')';
+            }
+            document.getElementById("post_title_id").value = data.title;
+            document.getElementById("post_content_id").value = data.content;
         })
         .catch(error => {
             console.error('Error:', error);
-            console.log("iiiiiffffffffffff----163-------");
             return null;
         });
 
