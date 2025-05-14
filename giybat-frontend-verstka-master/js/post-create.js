@@ -9,12 +9,12 @@ async function createPost() {
     const contentValue = document.getElementById("post_content_id").value;
 
     if (!file || !titleValue || !contentValue) {
-        alert("Enter all inputs")
+        alert("Barcha maydonlarni to'ldiring!")
         return;
     }
 
     // image upload
-    const imageId = await uploadImage();
+    const imageId = await uploadImage();  // awaitni vazifasi uploadImage()ni ishga tushurib yakunlangandan keyin 18-qatordan keyingi kodlarga o'tib ketishini taminlaydi
 
     const body = {
         "title": titleValue,
@@ -31,6 +31,31 @@ async function createPost() {
     }
     const lang = document.getElementById("current-lang").textContent;
 
+    return fetch('http://localhost:8080/posts', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept-Language': lang,
+            'Authorization': 'Bearer ' + jwt
+        },
+        body: JSON.stringify(body)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            window.location.href = './profile-post-list.html';
+            if (data.id) {
+                return data.id;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            return null;
+        });
 }
 
 // ------------ Image preview ------------
@@ -62,7 +87,7 @@ async function uploadImage() {
         }
         const lang = document.getElementById("current-lang").textContent;
 
-        /* return fetch('http://localhost:8080/attach/upload', {
+        return fetch('http://localhost:8080/attach/upload', {
              method: 'POST',
              headers: {
                  'Accept-Language': lang,
@@ -84,10 +109,18 @@ async function uploadImage() {
              .catch(error => {
                  console.error('Error:', error);
                  return null;
-             });*/
+             });
     }
 }
 
+window.onload = function (){
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var idParam = url.searchParams.get("id");
+    if (idParam){
+        getPostById(idParam)
+    }
+}
 window.addEventListener("DOMContentLoaded", function () {
     var url_string = window.location.href; // www.test.com?id=dasdasd
     var url = new URL(url_string);
@@ -100,8 +133,35 @@ window.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-function getPostById(postId) {
+function getPostById(idParam) {
     const lang = document.getElementById("current-lang").textContent;
+
+    return fetch('http://localhost:8080/posts/public/'+idParam, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept-Language': lang
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+                console.log("iiiiiffffffffffff----151-------");
+            }else {
+                return Promise.reject(response.text());
+                console.log("iiiiiffffffffffff----154-------");
+            }
+        })
+        .then(data => {
+            console.log(data)
+            console.log("iIJOBIIIYYY iiiiffffffffffff----159-------");
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            console.log("iiiiiffffffffffff----163-------");
+            return null;
+        });
+
 }
 
 async function updatePost() {

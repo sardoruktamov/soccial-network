@@ -1,6 +1,6 @@
-// window.onload = function () {
-//     getPostList();
-// };
+window.onload = function () {
+    getPostList();
+};
 window.addEventListener("DOMContentLoaded", function () {
     getPostList();
 });
@@ -9,17 +9,96 @@ let currentPage = 1;
 
 function getPostList() {
     const jwt = localStorage.getItem('jwtToken');
-    // if (!jwt) {
-    //     window.location.href = './login.html';
-    //     return;
-    // }
-    // const lang = document.getElementById("current-lang").textContent;
-    // let size = 9;
+
+    if (!jwt) {
+        window.location.href = './login.html';
+        return;
+    }
+    const lang = document.getElementById("current-lang").textContent;
+
+    fetch('http://localhost:8080/posts/profile', {
+        method: 'GET',
+        headers: {
+            'Accept-Language': lang,
+            'Authorization': 'Bearer ' + jwt
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            showPostList(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
 
 function showPostList(postList) {
     const parent = document.getElementById("profile_post_container_id")
     parent.innerHTML = '';
+    postList.forEach(postItem => {
+        // parent div
+        const div = document.createElement("div");
+        div.classList.add("position-relative","post_box");
+        //button
+        const  editButton = document.createElement("a");
+        editButton.classList.add("profile_tab_btn");
+        editButton.href = "./post-create.html?id=" + postItem.id
+
+        // image div
+        const imageDiv = document.createElement("div");
+        imageDiv.classList.add("post_img__box");
+            // img
+            const img = document.createElement("img");
+            if(postItem.photo && !postItem.photo.id){
+                img.src = "./images/book1.png";
+            }else {
+                img.src = postItem.photo.url;
+            }
+            img.alt = "Posts";
+            img.classList.add("post_img");
+
+        imageDiv.appendChild(img); // rasmni rasm konteyneriga qo‘shish
+
+        // <h3> title
+        const h3 = document.createElement("h3");
+        h3.classList.add("post_title");
+        h3.textContent = postItem.title;
+
+        // <p> sana
+        const p = document.createElement("p");
+        p.classList.add("post_text");
+        p.textContent = formatDate(postItem.createdDate);
+
+        // hamma elementlarni div (post_box) ga qo‘shamiz
+        div.appendChild(editButton);
+        div.appendChild(imageDiv);
+        div.appendChild(h3);
+        div.appendChild(p);
+
+
+        parent.appendChild(div);
+        console.log(postItem)
+    })
+}
+
+// sanani formatlash
+function formatDate(isoDateString) {
+    const date = new Date(isoDateString);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 0-based
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${day}.${month}.${year} ${hours}:${minutes}`;
 }
 
 function showPagination(totalElements, size) {
