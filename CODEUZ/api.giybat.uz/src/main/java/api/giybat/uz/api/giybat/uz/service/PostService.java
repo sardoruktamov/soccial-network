@@ -55,7 +55,8 @@ public class PostService {
     }
 
     public PostDTO getById(String id){
-        PostEntity entity = new PostEntity();
+        PostEntity entity = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
         return toDto(entity);
     }
 
