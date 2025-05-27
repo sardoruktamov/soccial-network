@@ -118,7 +118,11 @@ window.onload = function (){
     var url = new URL(url_string);
     var idParam = url.searchParams.get("id");
     if (idParam){
-        getPostById(idParam)
+        getPostById(idParam);
+
+        document.getElementById("post_create_btn_group").classList.add("display-none")
+        document.getElementById("post_update_btn_group").classList.remove("display-none")
+        document.getElementById("post_page_title_id").textContent = "Postni o'zgartirish"
     }
 }
 window.addEventListener("DOMContentLoaded", function () {
@@ -152,6 +156,7 @@ function getPostById(idParam) {
         })
         .then(data => {
             console.log(data)
+            currentPost = data;
             //photo
             if(data.photo && data.photo.url) {
                 const imgContainer = document.getElementById('post_image_block');
@@ -198,15 +203,79 @@ async function updatePost() {
         }
     }
 
+    const jwt = localStorage.getItem('jwtToken');
+    if (!jwt) {
+        window.location.href = './login.html';
+        return;
+    }
+    const lang = document.getElementById("current-lang").textContent;
+
+    return fetch('http://localhost:8080/posts/' + currentPost.id, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept-Language': lang,
+            'Authorization': 'Bearer ' + jwt
+        },
+        body: JSON.stringify(body)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert("update boldiiii")
+            window.location.href = './profile-post-list.html';
+            if (data.id) {
+                return data.id;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            return null;
+        });
+
 }
 
 function deletePost() {
     if (currentPost == null) {
         return;
     }
-
     if (!confirm("G'iybatni o'chirmoqchimisiz?")) {
         return;
     }
+    const jwt = localStorage.getItem('jwtToken');
+    if (!jwt) {
+        window.location.href = './login.html';
+        return;
+    }
+    const lang = document.getElementById("current-lang").textContent;
+
+    return fetch('http://localhost:8080/posts/' + currentPost.id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept-Language': lang,
+            'Authorization': 'Bearer ' + jwt
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert("Deleted!")
+            window.location.href = './profile-post-list.html';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            return null;
+        });
+
+
 }
 
