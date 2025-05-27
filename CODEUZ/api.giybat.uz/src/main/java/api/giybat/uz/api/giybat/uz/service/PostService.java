@@ -13,6 +13,7 @@ import api.giybat.uz.api.giybat.uz.repository.CustomRepository;
 import api.giybat.uz.api.giybat.uz.repository.PostRepository;
 import api.giybat.uz.api.giybat.uz.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -44,14 +45,15 @@ public class PostService {
         return toInfoDto(entity);
     }
 
-    public List<PostDTO> getProfilePostList(){
+    public Page<PostDTO> getProfilePostList(int page, int size){
+        PageRequest pageRequest = PageRequest.of(page,size);
         Integer profId = SpringSecurityUtil.getCurrentUserId();
-        List<PostEntity> entityList = postRepository.getAllByProfileIdAndVisibleTrue(profId);
-        List<PostDTO> dtoList = entityList.stream()
+        Page<PostEntity> result = postRepository.getAllByProfileIdAndVisibleTrueOrderByCreatedDateDesc(profId, pageRequest);
+        List<PostDTO> dtoList = result.getContent().stream()
                 .map(dto -> toInfoDto(dto))
                 .toList();
 
-        return dtoList;
+        return new PageImpl<PostDTO>(dtoList, pageRequest, result.getTotalElements());
     }
 
     public PostDTO getById(String id){

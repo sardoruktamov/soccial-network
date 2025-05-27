@@ -4,6 +4,7 @@ import api.giybat.uz.api.giybat.uz.dto.post.PostCreateDTO;
 import api.giybat.uz.api.giybat.uz.dto.post.PostDTO;
 import api.giybat.uz.api.giybat.uz.dto.post.PostFilterDTO;
 import api.giybat.uz.api.giybat.uz.service.PostService;
+import api.giybat.uz.api.giybat.uz.util.PageUtil;
 import api.giybat.uz.api.giybat.uz.util.SpringSecurityUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,8 +35,9 @@ public class PostController {
 
     @GetMapping("/profile")
     @Operation(summary = "Get Post List", description = "Api used for Get All Profile Post List")
-    public ResponseEntity<List<PostDTO>> postListByProfile(){
-        return ResponseEntity.ok(postService.getProfilePostList());
+    public ResponseEntity<Page<PostDTO>> postListByProfile(@RequestParam(value = "page", defaultValue = "1") int page,
+                                                           @RequestParam(value = "size", defaultValue = "3") int size){
+        return ResponseEntity.ok(postService.getProfilePostList(PageUtil.page(page),size));
     }
 
     @GetMapping("/public/{id}")
