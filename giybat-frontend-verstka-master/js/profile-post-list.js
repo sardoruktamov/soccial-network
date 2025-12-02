@@ -15,8 +15,9 @@ function getPostList() {
         return;
     }
     const lang = document.getElementById("current-lang").textContent;
-
-    fetch('http://localhost:8080/posts/profile', {
+    
+    let size = 2;
+    fetch('http://localhost:8080/posts/profile?page=' + currentPage + "&size=" + size, {
         method: 'GET',
         headers: {
             'Accept-Language': lang,
@@ -31,7 +32,8 @@ function getPostList() {
         })
         .then(data => {
             console.log('Success:', data);
-            showPostList(data);
+            showPostList(data.content);
+            showPagination(data.totalElements, size);
         })
         .catch(error => {
             console.error('Error:', error);

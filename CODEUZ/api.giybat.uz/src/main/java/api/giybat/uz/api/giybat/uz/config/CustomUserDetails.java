@@ -36,7 +36,10 @@ public class CustomUserDetails implements UserDetails {
         }
         this.authorities = roles;*/
         //2-usul stream orqali
-        this.authorities = roleList.stream().map(item -> new SimpleGrantedAuthority(item.name())).toList();
+        this.authorities = roleList.stream()
+                .map(
+                        item -> new SimpleGrantedAuthority(item.name())
+                ).toList();
     }
 
     @Override

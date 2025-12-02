@@ -24,8 +24,8 @@
                 </div>
                 <div class="header_block">
                     <div class="header_box__input">
-                        <input type="text" placeholder="Qidirish" class="header_input"/>
-                        <button class="header_search"></button>
+                        <input type="text" placeholder="Qidirish" class="header_input" id="header-search-inputId"/>
+                        <button class="header_search" id="header-search-buttonId"></button>
                     </div>
                     <div class="dropdown">
                         <div class="dropdown_toggle" onclick="toggleLanguageDropdown()">
@@ -48,9 +48,8 @@
                         </a>
                         <div class="header_entrance" id="header_entrance">
                             <button class="header_entrance__toggle">
-                                <span class="icon user-icon">
-                                  <img src="" class="header_user_image" id="header_user_image_id">
-                                </span>
+                                <img id="header_user_image_id" class="header_user_image" src="./images/default-user.png"
+                                     alt="">
                                 <span id="header_user_name_id">UserName</span>
                             </button>
                             <ul class="header_entrance__menu">
@@ -95,15 +94,15 @@
             <div class="container">
                 <div class="main-card_container">
                     <div class="main-card_img__box">
-                        <img src="./images/book_first.png" alt="Book first"/>
+                        <img src="./images/book_first.png" alt="Book first" id="main-card-imageId"/>
                     </div>
                     <div class="main-card_content">
-                        <p class="main-card_text">Mart 30, 2024</p>
-                        <h2 class="main-card_title">
+                        <p class="main-card_text" id="main-card-dateId">Mart 30, 2024</p>
+                        <h2 class="main-card_title" id="main-card-titleId">
                             "Aqlni tejayapti", deb o'ylaysizmi? Yo'q, ular telefon batareyasini sarf qilib o'tiradi!
                             Mazgilar. Undan ko'ra ilim olsa bo'lmaydimi.
                         </h2>
-                        <button class="main-card_btn">Batafsil</button>
+                        <a class="main-card_btn" href="post-detail.html" id="main-card-detailBtnId">Batafsil</a>
                     </div>
                 </div>
             </div>
@@ -112,7 +111,7 @@
 
         <!-- Main Post-List start -->
         <section class="post-wrapper container">
-            <div class="post_container">
+            <div class="post_container" id="post_container_id">
                 <!-- Post box start -->
                 <div class="post_box">
                     <a href="post-detail.html">
@@ -238,7 +237,7 @@
 
         <!-- Pagination start -->
         <section class="pagination container">
-            <div class="pagination-wrapper">
+            <div class="pagination-wrapper" id="paginationWrapperId">
                 <div class="pagination_btn__box">
                     <button class="pagination_btn pagination-back">Oldingi</button>
                 </div>
@@ -273,6 +272,7 @@
     <!-- Main end -->
 
 </div>
+
 <!-- Footer start -->
 <footer class="footer">
     <div class="container">
@@ -303,5 +303,7 @@
 <!-- Footer end -->
 
 <script src="./js/header.js"></script>
+<script src="./js/index.js"></script>
+<script src="./js/main.js"></script>
 </body>
 </html>

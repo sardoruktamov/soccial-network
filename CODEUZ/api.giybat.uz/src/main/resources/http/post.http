@@ -27,7 +27,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1I
 ### Profile Post List
 GET localhost:8080/posts/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3NDY5NjExNTgsImV4cCI6MTc0NzA0NzU1OH0.rZIyb9jsIjRyqgs1mI-ESKgtTI9ppwCvnPMzyXyDbLQMbPfdhc86taZ3WpKT437JTvXh2YdPqa6IfMH6a4hT_Q
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3NDgzNTgwMDEsImV4cCI6MTc0ODQ0NDQwMX0.RdD5DFlCPcEX7ZrMtIzwL95fRofj-jcGU9j5QiZszwXgbt45r9bMB3XxvZIXdCqaFIWHH8OJSNS4d9RzeFO7Kw
 
 ### Profile Post by ID
 GET localhost:8080/posts/public/8c139b9f-5461-4d63-8e7a-55bf81105e03
@@ -39,7 +39,7 @@ POST localhost:8080/posts/public/filter
 Content-Type: application/json
 
 {
-  "query": "user"
+  "query": ""
 }
 
 
