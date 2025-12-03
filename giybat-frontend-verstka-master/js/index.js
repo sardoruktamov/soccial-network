@@ -32,7 +32,7 @@ function getPostList() {
             console.log('Success:', data);
             if (data.content && data.content.length > 0){
                 showMainPost(data.content[0]);
-                // data.content.shift()   // remove 0
+                data.content.shift()   // remove 0
 
                 showPostList(data.content);
             }
@@ -63,9 +63,10 @@ function showPostList(postList){
         const div = document.createElement("div");
         div.classList.add("post_box");
         //button
-        const editButton = document.createElement("a");
-        editButton.classList.add("profile_tab_btn");
-        editButton.href = "./post-detail.html?id=" + postItem.id
+        // *** Yangilangan qism: a elementini yaratish ***
+        const aElement = document.createElement("a"); // a elementini yaratish
+        // aElement.classList.add("profile_tab_btn"); // yoki tegishli klass
+        aElement.href = "./post-detail.html?id=" + postItem.id // kerakli havola
 
         // image div
         const imageDiv = document.createElement("div");
@@ -93,13 +94,26 @@ function showPostList(postList){
         p.textContent = formatDate(postItem.createdDate);
 
         // a ga qo'shish
-        a.appendChild(imageDiv)
-        a.appendChild(h3)
-        a.appendChild(p)
+        aElement.appendChild(imageDiv)
+        aElement.appendChild(h3)
+        aElement.appendChild(p)
         // hamma elementlarni div ga qo‘shamiz
-        div.appendChild(a)
+        div.appendChild(aElement) // div ga a ni qo'shish
         parent.appendChild(div);
     });
-    console.log(postList)
+}
+
+// sanani formatlash
+function formatDate(isoDateString) {
+    const date = new Date(isoDateString);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 0-based
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${day}.${month}.${year} ${hours}:${minutes}`;
 }
 

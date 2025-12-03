@@ -16,7 +16,7 @@ function getPostList() {
     }
     const lang = document.getElementById("current-lang").textContent;
     
-    let size = 2;
+    let size = 6;
     fetch('http://localhost:8080/posts/profile?page=' + currentPage + "&size=" + size, {
         method: 'GET',
         headers: {
