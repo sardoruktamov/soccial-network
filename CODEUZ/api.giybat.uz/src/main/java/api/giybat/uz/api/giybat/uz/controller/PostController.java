@@ -3,6 +3,7 @@ package api.giybat.uz.api.giybat.uz.controller;
 import api.giybat.uz.api.giybat.uz.dto.post.PostCreateDTO;
 import api.giybat.uz.api.giybat.uz.dto.post.PostDTO;
 import api.giybat.uz.api.giybat.uz.dto.post.PostFilterDTO;
+import api.giybat.uz.api.giybat.uz.dto.post.SimilarPostListDTO;
 import api.giybat.uz.api.giybat.uz.service.PostService;
 import api.giybat.uz.api.giybat.uz.util.PageUtil;
 import api.giybat.uz.api.giybat.uz.util.SpringSecurityUtil;
@@ -65,5 +66,11 @@ public class PostController {
                                                 @RequestParam(value = "page", defaultValue = "1") int page,
                                                 @RequestParam(value = "size", defaultValue = "10") int size){
         return ResponseEntity.ok(postService.filter(dto, page-1, size));
+    }
+
+    @PostMapping("/public/similar")
+    @Operation(summary = "Get similar Post list", description = "Api used for getting for similar post list ")
+    public ResponseEntity<List<PostDTO>> similarPostList(@Valid @RequestBody SimilarPostListDTO dto){
+        return ResponseEntity.ok(postService.getSimilarPostList(dto));
     }
 }

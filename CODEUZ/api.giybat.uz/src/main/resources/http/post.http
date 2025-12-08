@@ -35,13 +35,21 @@ Content-Type: application/json
 
 
 ### Filter Post
-POST localhost:8080/posts/public/filter
+POST localhost:8080/posts/public/filter?page=1&size=3
 Content-Type: application/json
 
 {
-  "query": ""
+  "query": null,
+  "exceptId": "83acfeba-7a4c-40d2-b956-f81413774cd3"
 }
 
+### Get simipar Post List
+POST localhost:8080/posts/public/similar
+Content-Type: application/json
+
+{
+  "exceptId": "83acfeba-7a4c-40d2-b956-f81413774cd3"
+}
 
 ### Login -ADMIN
 POST localhost:8080/auth/login

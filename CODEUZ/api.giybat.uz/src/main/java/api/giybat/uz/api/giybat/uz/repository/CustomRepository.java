@@ -28,6 +28,11 @@ public class CustomRepository {
             queryBuilder.append("and lower(p.title) like :query ");
             params.put("query", "%" + filter.getQuery().toLowerCase() + "%");
         }
+        // get similar uchun filter
+        if (filter.getExceptId() != null){
+            queryBuilder.append("and p.id != :exceptId ");
+            params.put("exceptId", filter.getExceptId());
+        }
 
         // oxirgi yaratilgan post birinchi listda ko'rinadi
 //        queryBuilder.append("order by p.createdDate desc");

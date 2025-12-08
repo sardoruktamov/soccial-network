@@ -5,6 +5,7 @@ import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.post.PostCreateDTO;
 import api.giybat.uz.api.giybat.uz.dto.post.PostDTO;
 import api.giybat.uz.api.giybat.uz.dto.post.PostFilterDTO;
+import api.giybat.uz.api.giybat.uz.dto.post.SimilarPostListDTO;
 import api.giybat.uz.api.giybat.uz.entity.PostEntity;
 import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.api.giybat.uz.enums.ProfileRole;
@@ -99,6 +100,14 @@ public class PostService {
         return new PageImpl<>(dtoList, PageRequest.of(page,size), resultDto.getTotalCount());
     }
 
+    public List<PostDTO> getSimilarPostList(SimilarPostListDTO dto) {
+        List<PostEntity> postEntitiesList = postRepository.getSimilarPostList(dto.getExceptId());
+
+        List<PostDTO> dtoList = postEntitiesList.stream()
+                .map(this::toInfoDto)
+                .toList();
+        return dtoList;
+    }
     public PostDTO toDto(PostEntity entity){
         PostDTO dto = new PostDTO();
         dto.setId(entity.getId());
@@ -123,4 +132,5 @@ public class PostService {
             throw new AppBadException("Post not found: " + id);
         });
     }
+
 }

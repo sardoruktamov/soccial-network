@@ -75,6 +75,25 @@ document.addEventListener("DOMContentLoaded", () => {
         headerUserImage.src = userImg;
     }
 
+    // search input
+    const searchBtn = document.getElementById("header-search-buttonId");
+    if (searchBtn) {
+        searchBtn.addEventListener("click", (e) => {
+            const query = document.getElementById("header-search-inputId").value;
+            window.location.href = "./search-result-page.html?query=" + query;
+        });
+    }
+
+    const searchInput = document.getElementById("header-search-inputId")
+    if (searchInput){
+        searchInput.addEventListener("keypress",(e) => {
+            if (e.key === "Enter"){
+                e.preventDefault()
+                const query = searchInput.value;
+                window.location.href = "./search-result-page.html?query=" + query;
+            }
+        });
+    }
 
 });
 

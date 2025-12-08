@@ -104,65 +104,27 @@
 
         <!-- PostDetail start -->
         <section class="post-detail">
-            <p class="post-detail_data">14.04.2024</p>
-            <h2 class="post-detail_title">
+            <p class="post-detail_data" id="post-detail-dateId">14.04.2024</p>
+            <h2 class="post-detail_title" id="post-detail-titleId">
                 Kitob o‘qishning ajoyib va kulgili tomonlari
             </h2>
-            <div class="post-detail_img__box">
-                <img src="./images/deposito.png" alt="deposito" class="post-detail_deposito"/>
+            <!--   Photo -->
+            <div class="post_detail_img_box" >
+                <img src="./images/default-img.png" id="postDetailImgId">
             </div>
-            <p class="post-detail_description">Kitob o‘qishning foydalari haqida gap ketganda, hamma gapni jiddiy
-                boshlaydi. Lekin,
-                aytaylik, hayot shunchaki zerikarli emasmi? Mana, kitob o‘qishning avzalliklari haqida
-                kulgili bir qarash:</p>
-            <div class="post-detail_content">
-                <p>1. <b>Kitob o‘qiyotgan odamning ko‘zida hamma narsa
-                    donolikdir.</b> <br>
-                    Ko‘chada bir kitob bilan yurganingizda, odamlar sizni qandaydir ilmiy sirlarni
-                    ochayotgan odam deb o‘ylaydi. Aslida esa, siz boshqalar farishtalar va zombi urushini
-                    o‘qiyotgan bo‘lishingiz mumkin.</p>
-                <br>
-                <p>2. <b>Kitob – shaxsiy teleportatsiya mashinasi.</b> <br>
-                    Siz pulingizni tejab, chet ellarga bormasdan dunyoni aylanishingiz mumkin. Yangi Zelandiya
-                    o‘rmonlariga safar qilishni xohlaysizmi? Yoki Marsga uchishni? Birgina roman yetarli! Biroq,
-                    do‘stlaringiz sizni divanda yotgan holda "ekspeditsiya" qilayotganingizni bilib, xafa
-                    bo‘lishi mumkin.
-                </p>
-                <br>
-                <p> 3. <b>Kitoblar "uyqu dori"ning o‘rnini bosadi.</b> <br>
-                    O‘qishni boshlaganingizdan 10 daqiqa o‘tgach, ko‘zlaringiz ilinishni boshlasa, bu fiziologik
-                    mo‘jiza! Har qanday detektiv yoki fantastik hikoya yaxshi uyquga sabab bo‘lishi mumkin.
-                    Shunday qilib, kitoblar bilan tonggacha kechani bedor o‘tkazish yoki uxlab qolish – tanlov
-                    sizniki!
-                </p>
-                <br>
-                <p>4. <b>Kitoblar – ijtimoiy tarmoqsiz hayotning bir qismi.</b> <br>
-                    Tasavvur qiling, elektr toki yo‘q. Telefoningizda zaryad tugagan. Hayotingiz tamommi? Yo‘q,
-                    agar kitobingiz bo‘lsa! Kitob o‘qiyotganingizda, boshqa dunyolarni "skrollash" qilishingiz
-                    mumkin. Faqat, afsuski, "like" tugmasi yo‘q.
-                </p>
-                <br>
-                <p>5. <b>Kitoblar sog‘liq uchun foydali.</b><br>
-                    Fizik tomondan ham! Yotoqdan olib kelayotgan og‘ir ensiklopediyalar – mushaklarni
-                    rivojlantiradi. Shunchaki Kindle yoki planshet ishlatishni unuting, chunki ular sog‘lom
-                    hayot tarziga mos emas.
-                </p>
-                <br>
-                <p>
-                    6. <b>Kitoblar sizni yangi so‘zlar bilan boyitadi.</b> <br>
-                    Masalan, siz hozir "kvintessensiya" yoki "surunkali melanxoliya" kabi so‘zlarni ishlata
-                    boshlaysiz. Do‘stlaringiz esa hayron qoladi: "Bu odam nimalar deyapti?"
+            <!--   Photo end -->
+            <div class="post-detail_content" >
+                <p id="post-detail-contentId"></p>
 
-                </p>
             </div>
         </section>
         <!-- PostDetail end -->
 
-        <!-- Post list start -->
+        <!-- Similar Post list start -->
         <section class="post-wrapper container">
             <h2 class="post_main_title">Oxirgi G'iybatlar</h2>
 
-            <div class="post_container">
+            <div class="post_container" id="similar-post-container-id">
                 <!-- Post box start -->
                 <div class="post_box">
                     <a href="post-detail.html">
@@ -248,6 +210,7 @@
 <!-- Footer end -->
 
 <script src="./js/header.js"></script>
+<script src="./js/post-detail.js"></script>
 
 </body>
 </html>

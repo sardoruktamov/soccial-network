@@ -6,8 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PostFilterDTO {
+public class SimilarPostListDTO {
 
-    private String query;
+    @NotBlank(message = "Similar ID mavjud emas!")
     private String exceptId;
 }
