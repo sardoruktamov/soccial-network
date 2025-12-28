@@ -2,10 +2,8 @@ package api.giybat.uz.api.giybat.uz.service;
 
 import api.giybat.uz.api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.api.giybat.uz.dto.CodeConfirmDTO;
-import api.giybat.uz.api.giybat.uz.dto.profile.ProfileDetailUpdateDTO;
-import api.giybat.uz.api.giybat.uz.dto.profile.ProfilePasswordUpdateDTO;
-import api.giybat.uz.api.giybat.uz.dto.profile.ProfilePhotoUpdateDTO;
-import api.giybat.uz.api.giybat.uz.dto.profile.ProfileUsernameUpdateDTO;
+import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
+import api.giybat.uz.api.giybat.uz.dto.profile.*;
 import api.giybat.uz.api.giybat.uz.entity.AttachEntity;
 import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
@@ -19,6 +17,9 @@ import api.giybat.uz.api.giybat.uz.util.PhoneUtil;
 import api.giybat.uz.api.giybat.uz.util.SpringSecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -138,5 +139,25 @@ public class ProfileService {
     }
 
 
+    public PageImpl<ProfileDTO> filter(ProfileFilterDTO dto, int page, int size, AppLanguage lang) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<ProfileEntity> filterResult = null;
+        if (dto.getQuery() == null){
+            filterResult = profileRepository.findAllByOrderByCreatedDateDesc(pageRequest);
+        }else {
+            filterResult = profileRepository.filterByQuery(dto.getQuery().toLowerCase(), pageRequest);
+        }
+        List<ProfileDTO> resultList =  filterResult.stream().map(this::toDto).toList();
+        return new PageImpl<>(resultList, pageRequest,filterResult.getTotalElements());
+    }
 
+    public ProfileDTO toDto(ProfileEntity entity){
+        ProfileDTO dto = new ProfileDTO();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setUsername(entity.getUsername());
+//        dto.setRoleList();
+        dto.setPhoto(attachService.attachDTO(entity.getPhotoId()));
+        return dto;
+    }
 }

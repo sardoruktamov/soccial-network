@@ -80,7 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (searchBtn) {
         searchBtn.addEventListener("click", (e) => {
             const query = document.getElementById("header-search-inputId").value;
-            window.location.href = "./search-result-page.html?query=" + query;
+            if (query) {
+                window.location.href = "./search-result-page.html?query=" + query;
+            }
         });
     }
 
@@ -89,8 +91,9 @@ document.addEventListener("DOMContentLoaded", () => {
         searchInput.addEventListener("keypress",(e) => {
             if (e.key === "Enter"){
                 e.preventDefault()
-                const query = searchInput.value;
-                window.location.href = "./search-result-page.html?query=" + query;
+                if (searchInput.value) {
+                    window.location.href = "./search-result-page.html?query=" + searchInput.value;
+                }
             }
         });
     }

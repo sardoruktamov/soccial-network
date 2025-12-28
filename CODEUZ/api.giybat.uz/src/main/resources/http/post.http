@@ -12,25 +12,25 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1I
 }
 
 ### Post UPDATE
-PUT localhost:8080/posts/436cba08-bd30-4d45-ab74-b76a9b9aed72
+PUT localhost:8080/posts/79b3217b-cb8a-4daf-9536-a85524b820f9
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3MzkxMTkyNTksImV4cCI6MTczOTIwNTY1OX0.FSqt3gkCvChgCOkuZrkEkvL3LiVo1zfimLrzdTLSRvajV5rEtKUs4OBd8Kd1pm9NtCQQ0Q2RexzsYYZiUcOGOQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3NjU3MzE0MDcsImV4cCI6MTc2NTgxNzgwN30.5W6mGzRNYhwet0wYvYUgFraifqlIY4no5J4uYfWRbZYoFNlU9CyJYefEA50IRmnHFOne_i_2Kf43zMK8eBCpZw
 
 {
-  "title": "ADMIN UPDATE-user-93 6777 yaratgan POST",
-  "content": "ADMIN UPDATE-content Test uchun user-93 6777 yaratgan POST sf sdfsd fsd fw ef wef sdf",
+  "title": "Toshkentda retsepsiz dori sotish to‘xtadi. Dorixonalarda vaziyat qanday?",
+  "content": "Kun.uz bilan suhbatda bo‘lgan sotuvchilardan birining bildirishicha, mijozlarning juda kamchiligi retsept bilan kelishyapti, aksariyati yangilikdan bexabar. Ammo “apteka”chilar ancha avval ogohlantirilgani, tizimga moslangani aytilmoqda.DMED [tibbiy axborot tizimi]ni har bittamizga tushuntirib, kompyuterdan ko‘rsatib, o‘rgatib ketishdi. Asosan faqat DMED retsept bilan beriladi deb aytishdi. Chet elda shunaqa-ku, o‘sha tizim bizga kirib kelgan. Bir tomondan yaxshi, lekin og‘ir kasallar bo‘lsa, birdaniga yosh bolalilar bor, “bering tez”, deb aytyapti, lekin [retsepti] oddiy qog‘ozda. O‘shanga ham berishimizga haqqimiz yo‘q ekan.",
   "photo": {
-    "id": "a9be4a98-cd82-4eb7-acfa-0099ba4f6409.jpg"
+    "id": "216c6d89-a229-4b77-b774-ef968852d127.jpg"
   }
 }
 
 ### Profile Post List
 GET localhost:8080/posts/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3NDgzNTgwMDEsImV4cCI6MTc0ODQ0NDQwMX0.RdD5DFlCPcEX7ZrMtIzwL95fRofj-jcGU9j5QiZszwXgbt45r9bMB3XxvZIXdCqaFIWHH8OJSNS4d9RzeFO7Kw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MDU4NDY4NjYiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMTIyIiwiaWF0IjoxNzY1NzI4NTEwLCJleHAiOjE3NjU4MTQ5MTB9.UL4sVWqcbArXJkwdcxpsUHpVtn6oMHoc9oIye7IyHc8ObOldtNmaEXyv6cmDKVl6iTFoHRS5mopDW5ZMc1uiEw
 
 ### Profile Post by ID
-GET localhost:8080/posts/public/8c139b9f-5461-4d63-8e7a-55bf81105e03
+GET localhost:8080/posts/public/79b3217b-cb8a-4daf-9536-a85524b820f9
 Content-Type: application/json
 
 

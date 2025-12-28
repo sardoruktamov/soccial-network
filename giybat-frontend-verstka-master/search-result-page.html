@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/post.css"/>
     <link rel="stylesheet" href="./css/navigation.css"/>
     <link rel="stylesheet" href="./css/footer.css"/>
+    <link rel="stylesheet" href="./css/pagination.css"/>
     <title>G'iybat.uz</title>
 </head>
 <body>
@@ -25,8 +26,8 @@
                 </div>
                 <div class="header_block">
                     <div class="header_box__input">
-                        <input type="text" placeholder="Qidirish" class="header_input"/>
-                        <button class="header_search"></button>
+                        <input type="text" placeholder="Qidirish" class="header_input" id="header-search-inputId"/>
+                        <button class="header_search" id="header-search-buttonId"></button>
                     </div>
                     <div class="dropdown">
                         <div class="dropdown_toggle" onclick="toggleLanguageDropdown()">
@@ -49,12 +50,8 @@
                         </a>
                         <div class="header_entrance" id="header_entrance">
                             <button class="header_entrance__toggle">
-                                <span class="icon user-icon">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                       fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 9a5 5 0 0 0-4.546 2.916A2 2 0 0 0 5.07 14h5.858a2 2 0 0 0 1.616-2.084A5 5 0 0 0 8 9z"/>
-                                  </svg>
-                                </span>
+                                <img id="header_user_image_id" class="header_user_image" src="./images/default-user.png"
+                                     alt="">
                                 <span id="header_user_name_id">UserName</span>
                             </button>
                             <ul class="header_entrance__menu">
@@ -105,19 +102,19 @@
 
             <!--  post-search start -->
             <div class="post-search_wrapper">
-                <h2 class="post-search_title">Qidiruv “Latta”</h2>
-                <span class="post-search_span">3 topildi</span>
+                <h2 class="post-search_title" id="searchQueryTagId">Qidiruv “Latta”</h2>
+                <span class="post-search_span" id="searchQueryResultTagId">3 topildi</span>
             </div>
 
             <form class="mb-16">
                 <div class="post-search_input__box">
-                    <input placeholder="Latta" type="text" class="post-search_input"/>
-                    <button class="post-search_btn"></button>
+                    <input placeholder="Qidirish" type="text" class="post-search_input" id="srp-search-inputId"/>
+                    <button class="post-search_btn" id="srp-search-buttonId"></button>
                 </div>
             </form>
             <!--  post-search end -->
 
-            <div class="post_container mb-16">
+            <div class="post_container mb-16" id="post-search-result-containerId">
                 <!-- Post box start -->
                 <div class="post_box">
                     <a href="post-detail.html">
@@ -167,6 +164,40 @@
                 <!-- Post box end -->
             </div>
         </section>
+
+        <!-- Pagination start -->
+        <section class="pagination container">
+            <div class="pagination-wrapper" id="paginationWrapperId">
+                <div class="pagination_btn__box">
+                    <button class="pagination_btn pagination-back">Oldingi</button>
+                </div>
+                <div class="pagination_block">
+                    <div class="pagination_btn__box">
+                        <button class="pagination_active">1</button>
+                    </div>
+                    <div class="pagination_btn__box">
+                        <button class="pagination_btn">2</button>
+                    </div>
+                    <div class="pagination_btn__box">
+                        <button class="pagination_btn">3</button>
+                    </div>
+                    <div class="pagination_btn__box">
+                        <button class="pagination_btn">4</button>
+                    </div>
+                    <div class="pagination_btn__box">
+                        <button class="pagination_btn">...</button>
+                    </div>
+                    <div class="pagination_btn__box">
+                        <button class="pagination_btn">10</button>
+                    </div>
+                </div>
+                <div class="pagination_btn__box">
+                    <button class="pagination_btn pagination-forward">Keyingi</button>
+                </div>
+            </div>
+        </section>
+        <!-- Pagination end -->
+
     </main>
 
 </div>
@@ -201,6 +232,7 @@
 <!-- Footer end -->
 
 <script src="./js/header.js"></script>
+<script src="./js/search-result.js"></script>
 
 </body>
 </html>

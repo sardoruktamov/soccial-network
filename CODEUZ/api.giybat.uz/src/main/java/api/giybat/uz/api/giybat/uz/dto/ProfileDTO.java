@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 public class ProfileDTO {
 
+    private Integer id;
     private String name;
     private String username;
     private List<ProfileRole> roleList;

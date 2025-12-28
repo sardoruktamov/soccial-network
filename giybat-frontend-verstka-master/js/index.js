@@ -29,10 +29,10 @@ function getPostList() {
             return response.json();
         })
         .then(data => {
-            console.log('Success:', data);
             if (data.content && data.content.length > 0){
                 showMainPost(data.content[0]);
                 data.content.shift()   // remove 0
+                console.log("malumotlar" + data.content[0].title)
 
                 showPostList(data.content);
                 showPagination(data.totalElements, size)
@@ -121,7 +121,6 @@ function formatDate(isoDateString) {
 
 function showPagination(totalElements, size) {
     let totalPageCount = Math.ceil(totalElements / size);
-    console.log(totalPageCount);
 
     const paginationWrapper = document.getElementById("paginationWrapperId");
     paginationWrapper.innerHTML = '';

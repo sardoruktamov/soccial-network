@@ -3,6 +3,8 @@ package api.giybat.uz.api.giybat.uz.repository;
 import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.api.giybat.uz.enums.GeneralStatus;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -43,4 +45,9 @@ public interface ProfileRepository extends CrudRepository<ProfileEntity,Integer>
     @Transactional
     @Query("update ProfileEntity set photoId =?2 where id =?1")
     void updatePhoto(Integer id, String photoId);
+
+    Page<ProfileEntity> findAllByOrderByCreatedDateDesc(PageRequest pageRequest);
+
+    @Query("From ProfileEntity where id =?1 or lower(username) like ?1 or lower(name) like ?1")
+    Page<ProfileEntity> filterByQuery(String query, PageRequest pageRequest);
 }
