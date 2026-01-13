@@ -143,9 +143,9 @@ public class ProfileService {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<ProfileEntity> filterResult = null;
         if (dto.getQuery() == null){
-            filterResult = profileRepository.findAllByOrderByCreatedDateDesc(pageRequest);
+            filterResult = profileRepository.findAllByVisibleIsTrueOrderByCreatedDateDesc(pageRequest);
         }else {
-            filterResult = profileRepository.filterByQuery(dto.getQuery().toLowerCase(), pageRequest);
+            filterResult = profileRepository.filterByQuery("%" + dto.getQuery().toLowerCase() + "%", pageRequest);
         }
         List<ProfileDTO> resultList =  filterResult.stream().map(this::toDto).toList();
         return new PageImpl<>(resultList, pageRequest,filterResult.getTotalElements());
@@ -156,6 +156,7 @@ public class ProfileService {
         dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setUsername(entity.getUsername());
+        dto.setStatus(entity.getStatus());
 //        dto.setRoleList();
         dto.setPhoto(attachService.attachDTO(entity.getPhotoId()));
         return dto;

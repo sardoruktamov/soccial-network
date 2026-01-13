@@ -67,7 +67,7 @@ public class ProfileController {
                                                        @RequestParam(value = "page", defaultValue = "1") int page,
                                                        @RequestParam(value = "size", defaultValue = "10") int size
                                                       ){
-        AppResponse<String> res = profileService.filter(dto, PageUtil.page(page), size, lang);
-        return ResponseEntity.ok(res);
+
+        return ResponseEntity.ok(profileService.filter(dto, PageUtil.page(page), size, lang));
     }
 }

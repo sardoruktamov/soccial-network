@@ -8,11 +8,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface ProfileRepository extends CrudRepository<ProfileEntity,Integer> {
+public interface ProfileRepository extends CrudRepository<ProfileEntity,Integer>, PagingAndSortingRepository<ProfileEntity, Integer> {
     Optional<ProfileEntity> findByUsernameAndVisibleTrue(String username);
     Optional<ProfileEntity> findByIdAndVisibleTrue(Integer id);
 
@@ -46,8 +47,8 @@ public interface ProfileRepository extends CrudRepository<ProfileEntity,Integer>
     @Query("update ProfileEntity set photoId =?2 where id =?1")
     void updatePhoto(Integer id, String photoId);
 
-    Page<ProfileEntity> findAllByOrderByCreatedDateDesc(PageRequest pageRequest);
+    Page<ProfileEntity> findAllByVisibleIsTrueOrderByCreatedDateDesc(PageRequest pageRequest);
 
-    @Query("From ProfileEntity where id =?1 or lower(username) like ?1 or lower(name) like ?1")
+    @Query("From ProfileEntity where (lower(username) like ?1 or lower(name) like ?1) and visible is true")
     Page<ProfileEntity> filterByQuery(String query, PageRequest pageRequest);
 }
