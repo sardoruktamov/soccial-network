@@ -1,7 +1,6 @@
 window.addEventListener("DOMContentLoaded", function () {
     const profileStr = localStorage.getItem("userDetail");
     const userDetail = JSON.parse(profileStr);
-    console.log(userDetail.roleList)
     let isAdmin = false;
     userDetail.roleList.forEach(role => {
         if (role === 'ROLE_ADMIN') {

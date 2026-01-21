@@ -4,9 +4,11 @@ import api.giybat.uz.api.giybat.uz.enums.GeneralStatus;
 import api.giybat.uz.api.giybat.uz.enums.ProfileRole;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Column;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -20,6 +22,8 @@ public class ProfileDTO {
     private String username;
     private List<ProfileRole> roleList;
     private String jwt;
+    private LocalDateTime createdDate;
     private AttachDTO photo;
     private GeneralStatus status;
+    private Long postCount;
 }

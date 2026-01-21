@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class CustomRepository {
+public class CustomPostRepository {
 
     @Autowired
     private EntityManager entityManager;

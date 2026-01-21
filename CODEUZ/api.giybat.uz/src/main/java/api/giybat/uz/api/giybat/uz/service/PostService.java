@@ -1,16 +1,11 @@
 package api.giybat.uz.api.giybat.uz.service;
 
 import api.giybat.uz.api.giybat.uz.dto.FilterResultDTO;
-import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
-import api.giybat.uz.api.giybat.uz.dto.post.PostCreateDTO;
-import api.giybat.uz.api.giybat.uz.dto.post.PostDTO;
-import api.giybat.uz.api.giybat.uz.dto.post.PostFilterDTO;
-import api.giybat.uz.api.giybat.uz.dto.post.SimilarPostListDTO;
+import api.giybat.uz.api.giybat.uz.dto.post.*;
 import api.giybat.uz.api.giybat.uz.entity.PostEntity;
-import api.giybat.uz.api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.api.giybat.uz.exps.AppBadException;
-import api.giybat.uz.api.giybat.uz.repository.CustomRepository;
+import api.giybat.uz.api.giybat.uz.repository.CustomPostRepository;
 import api.giybat.uz.api.giybat.uz.repository.PostRepository;
 import api.giybat.uz.api.giybat.uz.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +26,7 @@ public class PostService {
     @Autowired
     private AttachService attachService;
     @Autowired
-    private CustomRepository customRepository;
+    private CustomPostRepository customPostRepository;
 
     public PostDTO create(PostCreateDTO dto){
         PostEntity entity = new PostEntity();
@@ -93,7 +88,7 @@ public class PostService {
     }
 
     public PageImpl<PostDTO> filter(PostFilterDTO dto, int page, int size){
-        FilterResultDTO<PostEntity> resultDto = customRepository.filter(dto, page, size);
+        FilterResultDTO<PostEntity> resultDto = customPostRepository.filter(dto, page, size);
         List<PostDTO> dtoList = resultDto.getList().stream()
                 .map(postEntity -> toInfoDto(postEntity))
                 .toList();
@@ -133,4 +128,7 @@ public class PostService {
         });
     }
 
+    public List<PostDTO> adminFilter(PostAdminFilterDTO dto, int page, int size) {
+        return null;
+    }
 }

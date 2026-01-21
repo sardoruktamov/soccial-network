@@ -1,9 +1,9 @@
 package api.giybat.uz.api.giybat.uz.controller;
 
-import api.giybat.uz.api.giybat.uz.dto.post.PostCreateDTO;
-import api.giybat.uz.api.giybat.uz.dto.post.PostDTO;
-import api.giybat.uz.api.giybat.uz.dto.post.PostFilterDTO;
-import api.giybat.uz.api.giybat.uz.dto.post.SimilarPostListDTO;
+import api.giybat.uz.api.giybat.uz.dto.AppResponse;
+import api.giybat.uz.api.giybat.uz.dto.post.*;
+import api.giybat.uz.api.giybat.uz.dto.profile.ProfileSatusDTO;
+import api.giybat.uz.api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.api.giybat.uz.service.PostService;
 import api.giybat.uz.api.giybat.uz.util.PageUtil;
 import api.giybat.uz.api.giybat.uz.util.SpringSecurityUtil;
@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -72,5 +73,14 @@ public class PostController {
     @Operation(summary = "Get similar Post list", description = "Api used for getting for similar post list ")
     public ResponseEntity<List<PostDTO>> similarPostList(@Valid @RequestBody SimilarPostListDTO dto){
         return ResponseEntity.ok(postService.getSimilarPostList(dto));
+    }
+
+    @PostMapping("/admin-post-list/filter")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Operation(summary = "Post list filter for admin", description = "Api used for filtering for admin post list ")
+    public ResponseEntity<List<PostDTO>> filter(@Valid @RequestBody PostAdminFilterDTO dto,
+                                                @RequestParam(value = "page", defaultValue = "1") int page,
+                                                @RequestParam(value = "size", defaultValue = "10") int size){
+        return ResponseEntity.ok(postService.adminFilter(dto, page-1, size));
     }
 }

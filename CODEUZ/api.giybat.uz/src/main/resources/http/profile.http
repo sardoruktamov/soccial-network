@@ -1,23 +1,39 @@
 ### Profile detail update
 PUT localhost:8080/profile/detail
 Content-Type: application/json
-Accept-Language: E                                      N
+Accept-Language: EN
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6IjEyMCIsImlhdCI6MTczNjA2MTY2MywiZXhwIjoxNzM2MTQ4MDYzfQ.qbS1_1KSer81vkRMJPtIuz0wgNCGEMWcfqrAJe-f84D7y9j8FdFYtoQde4ptAmCsTkBPtGTHp2TxUYK4ty1m7Q
 
 {
   "name": "O'ktamov S"
 }
 
-### Profile filter get by
-POST localhost:8080/profile/filter
+### get Users by Profile filter name
+POST http://localhost:8080/profile/filter?page=1&size=6
 Content-Type: application/json
 Accept-Language: EN
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3NjgyMzQzMTAsImV4cCI6MTc2ODMyMDcxMH0.drW40ItGeSKinhE4etTOUoVYOz5u6luvOTFM80C8BDyphOZmVZBLD98RjpxDZAIJ2rkQqiyN2fRbA3B8uHgAew
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3Njg5ODQ5ODAsImV4cCI6MTc2OTA3MTM4MH0.PLbQnZoNaG0o-gCF5q4HPw9zyY7qC-SEFydi4BAbO6YYEgLSbg7Fjtk_RHaK1p1mpToDYoSobcObFoq3H3b6ow
 
 {
-  "query": "dmin"
+  "query": ""
 }
 
+### Profile Delete
+DELETE http://localhost:8080/profile/122
+Content-Type: application/json
+Accept-Language: EN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3Njg5MDA2NjAsImV4cCI6MTc2ODk4NzA2MH0.UFAIokRwSPZMdnQRSO3MXfA4HbGbjyBJmvqrEg-otx2hyTCFtQTrYURwXd_E3hX9IFJleG2myzax0VHMyVc34w
+
+
+### Profile update status
+PUT http://localhost:8080/profile/status/122
+Content-Type: application/json
+Accept-Language: EN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3Njg5MDA2NjAsImV4cCI6MTc2ODk4NzA2MH0.UFAIokRwSPZMdnQRSO3MXfA4HbGbjyBJmvqrEg-otx2hyTCFtQTrYURwXd_E3hX9IFJleG2myzax0VHMyVc34w
+
+{
+  "status": "ACTIVE"
+}
 
 ### Profile Password update
 PUT localhost:8080/profile/password

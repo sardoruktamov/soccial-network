@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "profile")
@@ -42,4 +43,7 @@ public class ProfileEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "photo_id", insertable = false, updatable = false)
     private AttachEntity photo;
+
+    @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY)
+    private List<ProfileRoleEntity> roleList;
 }

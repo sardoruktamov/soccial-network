@@ -67,7 +67,24 @@ public class ProfileController {
                                                        @RequestParam(value = "page", defaultValue = "1") int page,
                                                        @RequestParam(value = "size", defaultValue = "10") int size
                                                       ){
-
         return ResponseEntity.ok(profileService.filter(dto, PageUtil.page(page), size, lang));
     }
+
+    @PutMapping("/status/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<AppResponse<String>> status(@PathVariable("id") Integer id,
+                   @RequestBody ProfileSatusDTO dto,
+                   @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang
+                   ){
+        return ResponseEntity.ok(profileService.changeStatus(id, dto.getStatus(), lang));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<AppResponse<String>> delete(@PathVariable("id") Integer id,
+                                                      @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang
+    ){
+        return ResponseEntity.ok(profileService.delete(id, lang));
+    }
+
 }
