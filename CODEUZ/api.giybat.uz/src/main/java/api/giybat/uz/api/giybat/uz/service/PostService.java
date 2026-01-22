@@ -1,5 +1,6 @@
 package api.giybat.uz.api.giybat.uz.service;
 
+import api.giybat.uz.api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.api.giybat.uz.dto.FilterResultDTO;
 import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.post.*;
@@ -80,13 +81,13 @@ public class PostService {
         return toInfoDto(entity);
     }
 
-    public Boolean delete(String id){
+    public AppResponse<String> delete(String id){
         PostEntity entity = get(id);
         if (!SpringSecurityUtil.hazRole(ProfileRole.ROLE_ADMIN) && !entity.getProfileId().equals(SpringSecurityUtil.getCurrentUserId())){
             throw new AppBadException("You do not have permission to update this post");
         }
         postRepository.delete(id);
-        return true;
+        return new AppResponse<>("Post muvoffaqiyatli o'chirildi.");
     }
 
     public PageImpl<PostDTO> filter(PostFilterDTO dto, int page, int size){

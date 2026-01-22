@@ -58,7 +58,7 @@ public class PostController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete Post", description = "Api used for Post Delete")
-    public ResponseEntity<Boolean> delete(@PathVariable("id") String id){
+    public ResponseEntity<AppResponse<String>> delete(@PathVariable("id") String id){
         return ResponseEntity.ok(postService.delete(id));
     }
 

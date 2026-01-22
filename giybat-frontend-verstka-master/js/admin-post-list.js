@@ -263,6 +263,7 @@ function deletePost(id){
             return response.json();
         })
         .then(data => {
+            showPopup(data.message);
             getPostList()
         })
         .catch(error => {

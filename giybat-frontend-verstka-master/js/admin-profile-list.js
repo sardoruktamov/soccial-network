@@ -279,6 +279,7 @@ function changeStatus(id, status){
             return response.json();
         })
         .then(data => {
+            showPopup(data.message)
             getProfileList()
         })
         .catch(error => {
