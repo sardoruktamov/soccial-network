@@ -36,7 +36,7 @@ function getPostById(idParam) {
             }
             document.getElementById("post-detail-dateId").textContent = formatDate(data.createdDate);
             document.getElementById("post-detail-titleId").textContent = data.title;
-            document.getElementById("post-detail-contentId").textContent = data.content;
+            document.getElementById("post-detail-contentId").innerHTML = data.content;
         })
         .catch(error => {
             console.error('Error:', error);

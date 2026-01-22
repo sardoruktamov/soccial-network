@@ -24,6 +24,17 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1I
   }
 }
 
+### get Posts in Admin Profile filter by name, title
+POST http://localhost:8080/posts/admin-post-list/filter
+Content-Type: application/json
+Accept-Language: EN
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3Njg5ODQ5ODAsImV4cCI6MTc2OTA3MTM4MH0.PLbQnZoNaG0o-gCF5q4HPw9zyY7qC-SEFydi4BAbO6YYEgLSbg7Fjtk_RHaK1p1mpToDYoSobcObFoq3H3b6ow
+
+{
+  "postQuery": null,
+  "profileQuery": "6777"
+}
+
 ### Profile Post List
 GET localhost:8080/posts/profile
 Content-Type: application/json

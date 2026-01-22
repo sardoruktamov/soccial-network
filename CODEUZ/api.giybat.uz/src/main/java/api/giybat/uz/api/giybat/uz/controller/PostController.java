@@ -14,6 +14,7 @@ import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +67,7 @@ public class PostController {
     public ResponseEntity<Page<PostDTO>> filter(@Valid @RequestBody PostFilterDTO dto,
                                                 @RequestParam(value = "page", defaultValue = "1") int page,
                                                 @RequestParam(value = "size", defaultValue = "10") int size){
-        return ResponseEntity.ok(postService.filter(dto, page-1, size));
+        return ResponseEntity.ok(postService.filter(dto, PageUtil.page(page), size));
     }
 
     @PostMapping("/public/similar")
@@ -78,9 +79,9 @@ public class PostController {
     @PostMapping("/admin-post-list/filter")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Post list filter for admin", description = "Api used for filtering for admin post list ")
-    public ResponseEntity<List<PostDTO>> filter(@Valid @RequestBody PostAdminFilterDTO dto,
-                                                @RequestParam(value = "page", defaultValue = "1") int page,
-                                                @RequestParam(value = "size", defaultValue = "10") int size){
-        return ResponseEntity.ok(postService.adminFilter(dto, page-1, size));
+    public ResponseEntity<PageImpl<PostDTO>> filter(@Valid @RequestBody PostAdminFilterDTO dto,
+                                                    @RequestParam(value = "page", defaultValue = "1") int page,
+                                                    @RequestParam(value = "size", defaultValue = "10") int size){
+        return ResponseEntity.ok(postService.adminFilter(dto, PageUtil.page(page), size));
     }
 }

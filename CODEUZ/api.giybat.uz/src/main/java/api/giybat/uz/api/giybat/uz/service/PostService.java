@@ -1,12 +1,14 @@
 package api.giybat.uz.api.giybat.uz.service;
 
 import api.giybat.uz.api.giybat.uz.dto.FilterResultDTO;
+import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.post.*;
 import api.giybat.uz.api.giybat.uz.entity.PostEntity;
 import api.giybat.uz.api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.api.giybat.uz.repository.CustomPostRepository;
 import api.giybat.uz.api.giybat.uz.repository.PostRepository;
+import api.giybat.uz.api.giybat.uz.service.mapper.PostDetailMapper;
 import api.giybat.uz.api.giybat.uz.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -95,6 +97,14 @@ public class PostService {
         return new PageImpl<>(dtoList, PageRequest.of(page,size), resultDto.getTotalCount());
     }
 
+    public PageImpl<PostDTO> adminFilter(PostAdminFilterDTO dto, int page, int size) {
+        FilterResultDTO<Object[]> resultDto = customPostRepository.filter(dto, page, size);
+        List<PostDTO> dtoList = resultDto.getList().stream()
+                .map(postEntity -> toDto(postEntity))
+                .toList();
+        return new PageImpl<>(dtoList, PageRequest.of(page,size), resultDto.getTotalCount());
+    }
+
     public List<PostDTO> getSimilarPostList(SimilarPostListDTO dto) {
         List<PostEntity> postEntitiesList = postRepository.getSimilarPostList(dto.getExceptId());
 
@@ -113,6 +123,24 @@ public class PostService {
         return dto;
     }
 
+    public PostDTO toDto(Object[] obj){
+        PostDTO post = new PostDTO();
+        post.setId((String) obj[0]);
+        post.setTitle((String) obj[1]);
+        if (obj[2] != null){
+            post.setPhoto(attachService.attachDTO((String) obj[2]));
+        }
+        post.setCreatedDate((LocalDateTime) obj[3]);
+
+        ProfileDTO profile = new ProfileDTO();
+        profile.setId((Integer) obj[4]);
+        profile.setName((String) obj[5]);
+        profile.setUsername((String) obj[6]);
+
+        post.setProfile(profile);
+        return post;
+    }
+
     public PostDTO toInfoDto(PostEntity entity){
         PostDTO dto = new PostDTO();
         dto.setId(entity.getId());
@@ -128,7 +156,5 @@ public class PostService {
         });
     }
 
-    public List<PostDTO> adminFilter(PostAdminFilterDTO dto, int page, int size) {
-        return null;
-    }
+
 }

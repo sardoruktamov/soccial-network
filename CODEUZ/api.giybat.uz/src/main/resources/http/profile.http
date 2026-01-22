@@ -18,6 +18,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1I
   "query": ""
 }
 
+
 ### Profile Delete
 DELETE http://localhost:8080/profile/122
 Content-Type: application/json

@@ -1,6 +1,7 @@
 package api.giybat.uz.api.giybat.uz.dto.post;
 
 import api.giybat.uz.api.giybat.uz.dto.AttachDTO;
+import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.entity.AttachEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
@@ -23,5 +24,7 @@ public class PostDTO {
     private AttachDTO photo;
 
     private LocalDateTime createdDate;
+
+    private ProfileDTO profile;
 
 }
