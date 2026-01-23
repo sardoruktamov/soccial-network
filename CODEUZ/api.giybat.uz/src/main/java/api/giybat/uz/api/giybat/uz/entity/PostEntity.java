@@ -1,5 +1,6 @@
 package api.giybat.uz.api.giybat.uz.entity;
 
+import api.giybat.uz.api.giybat.uz.enums.GeneralStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,5 +41,10 @@ public class PostEntity {
 
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private GeneralStatus status;
+
 
 }

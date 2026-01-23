@@ -5,6 +5,7 @@ import api.giybat.uz.api.giybat.uz.dto.FilterResultDTO;
 import api.giybat.uz.api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.api.giybat.uz.dto.post.*;
 import api.giybat.uz.api.giybat.uz.entity.PostEntity;
+import api.giybat.uz.api.giybat.uz.enums.GeneralStatus;
 import api.giybat.uz.api.giybat.uz.enums.ProfileRole;
 import api.giybat.uz.api.giybat.uz.exps.AppBadException;
 import api.giybat.uz.api.giybat.uz.repository.CustomPostRepository;
@@ -38,6 +39,7 @@ public class PostService {
         entity.setPhotoId(dto.getPhoto().getId());
         entity.setCreatedDate(LocalDateTime.now());
         entity.setVisible(true);
+        entity.setStatus(GeneralStatus.BLOCK);
         entity.setProfileId(SpringSecurityUtil.getCurrentUserId());
         postRepository.save(entity);
 

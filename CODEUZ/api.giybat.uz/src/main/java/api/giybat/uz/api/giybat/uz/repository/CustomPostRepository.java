@@ -22,7 +22,7 @@ public class CustomPostRepository {
 
     public FilterResultDTO<PostEntity> filter(PostFilterDTO filter, int page, int size){
 
-        StringBuilder queryBuilder = new StringBuilder("where p.visible = true ");
+        StringBuilder queryBuilder = new StringBuilder("where p.visible = true and p.status = 'ACTIVE' ");
         Map<String, Object> params = new HashMap<>();
 
         // agar filter kelsa ushbu shart ishlaydi, agar kelmasa keyingiga o'tib ketaveradi
