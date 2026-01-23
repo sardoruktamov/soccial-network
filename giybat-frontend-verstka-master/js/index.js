@@ -14,7 +14,7 @@ function getPostList() {
         "query": null
     }
     let size = 4;
-    fetch('http://localhost:8080/posts/public/filter?page=' + currentPage + "&size=" + size, {
+    fetch('http://localhost:8080/api/v1/posts/public/filter?page=' + currentPage + "&size=" + size, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

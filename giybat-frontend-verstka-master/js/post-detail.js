@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", function () {
 function getPostById(idParam) {
     const lang = document.getElementById("current-lang").textContent;
 
-    return fetch('http://localhost:8080/posts/public/'+idParam, {
+    return fetch('http://localhost:8080/api/v1/posts/public/'+idParam, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ function getPostList(exceptId) {
     const body = {
         "exceptId": exceptId
     }
-    fetch('http://localhost:8080/posts/public/similar', {
+    fetch('http://localhost:8080/api/v1/posts/public/similar', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

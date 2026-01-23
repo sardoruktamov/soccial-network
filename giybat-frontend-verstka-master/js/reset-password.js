@@ -13,7 +13,7 @@ function resetPassword() {
     const lang = document.getElementById("current-lang").textContent
 
 
-    fetch("http://localhost:8080/auth/registration/reset-password",{
+    fetch("http://localhost:8080/api/v1/auth/registration/reset-password",{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

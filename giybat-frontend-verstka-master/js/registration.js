@@ -33,7 +33,7 @@ document.getElementById("registrationForm")
         const lang = document.getElementById("current-lang").textContent
 
 
-        fetch("http://localhost:8080/auth/registration",{
+        fetch("http://localhost:8080/api/v1/auth/registration",{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

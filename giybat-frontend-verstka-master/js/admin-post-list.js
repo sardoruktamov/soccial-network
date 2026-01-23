@@ -1,3 +1,5 @@
+import AppConfig from './AppConfig.js';
+
 window.addEventListener("DOMContentLoaded", function () {
     getPostList();
 });
@@ -26,7 +28,7 @@ function getPostList() {
         "postQuery": postData,
         "profileQuery": profileData
     }
-    fetch('http://localhost:8080/posts/admin-post-list/filter?page=' + currentPage + "&size=" + pageSize, {
+    fetch(AppConfig.API + "/posts/admin-post-list/filter?page=" + currentPage + "&size=" + pageSize, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -248,7 +250,7 @@ function deletePost(id){
         return;
     }
 
-    fetch('http://localhost:8080/posts/' + id, {
+    fetch(AppConfig.API + "/posts/" + id, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -271,3 +273,7 @@ function deletePost(id){
         });
 }
 
+document.addEventListener("DOMContentLoaded", () =>{
+    document.getElementById("admin-post-search-btn-id").addEventListener("click", getPostList);
+})
+// window.getPostLis = getPostList()

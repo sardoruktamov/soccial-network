@@ -27,7 +27,6 @@ window.addEventListener("DOMContentLoaded", function () {
         searchInput.addEventListener("keypress", (e) => {
             if (e.key === "Enter") {
                 e.preventDefault();
-                console.log("aaaaaaaaaaaaaaaaaaaaa")
                 if (searchInput.value && searchInput.value.length > 0) {
                     window.location.href = "./search-result-page.html?query=" + searchInput.value;
                 }

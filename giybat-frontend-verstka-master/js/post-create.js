@@ -31,7 +31,7 @@ async function createPost() {
     }
     const lang = document.getElementById("current-lang").textContent;
 
-    return fetch('http://localhost:8080/posts', {
+    return fetch('http://localhost:8080/api/v1/posts', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ async function uploadImage() {
         }
         const lang = document.getElementById("current-lang").textContent;
 
-        return fetch('http://localhost:8080/attach/upload', {
+        return fetch('http://localhost:8080/api/v1/attach/upload', {
              method: 'POST',
              headers: {
                  'Accept-Language': lang,
@@ -140,7 +140,7 @@ window.addEventListener("DOMContentLoaded", function () {
 function getPostById(idParam) {
     const lang = document.getElementById("current-lang").textContent;
 
-    return fetch('http://localhost:8080/posts/public/'+idParam, {
+    return fetch('http://localhost:8080/api/v1/posts/public/'+idParam, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -210,7 +210,7 @@ async function updatePost() {
     }
     const lang = document.getElementById("current-lang").textContent;
 
-    return fetch('http://localhost:8080/posts/' + currentPost.id, {
+    return fetch('http://localhost:8080/api/v1/posts/' + currentPost.id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -253,7 +253,7 @@ function deletePost() {
     }
     const lang = document.getElementById("current-lang").textContent;
 
-    return fetch('http://localhost:8080/posts/' + currentPost.id, {
+    return fetch('http://localhost:8080/api/v1/posts/' + currentPost.id, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

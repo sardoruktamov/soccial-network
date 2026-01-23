@@ -36,7 +36,7 @@ function handleSubmit() {
     }
     const lang = document.getElementById("current-lang").textContent
 
-    fetch("http://localhost:8080/auth/registration/sms-verification",{
+    fetch("http://localhost:8080/api/v1/auth/registration/sms-verification",{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ function resendSms() {
     }
     const lang = document.getElementById("current-lang").textContent
 
-    fetch("http://localhost:8080/auth/registration/sms-verification-resent",{
+    fetch("http://localhost:8080/api/v1/auth/registration/sms-verification-resent",{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

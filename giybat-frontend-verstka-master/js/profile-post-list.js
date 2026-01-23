@@ -17,7 +17,7 @@ function getPostList() {
     const lang = document.getElementById("current-lang").textContent;
     
     let size = 6;
-    fetch('http://localhost:8080/posts/profile?page=' + currentPage + "&size=" + size, {
+    fetch('http://localhost:8080/api/v1/posts/profile?page=' + currentPage + "&size=" + size, {
         method: 'GET',
         headers: {
             'Accept-Language': lang,

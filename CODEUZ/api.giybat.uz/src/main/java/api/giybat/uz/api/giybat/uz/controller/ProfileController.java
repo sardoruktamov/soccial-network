@@ -17,7 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/profile")
+@RequestMapping("/api/v1/profile")
 @Slf4j
 @Tag(name = "ProfileController", description = "API list for working with Profile")
 public class ProfileController {

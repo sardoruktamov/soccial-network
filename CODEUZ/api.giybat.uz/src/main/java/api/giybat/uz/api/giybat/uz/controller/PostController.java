@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/api/v1/posts")
 @Slf4j
 @Tag(name = "PostController", description = "API list for working with Post")
 public class PostController {

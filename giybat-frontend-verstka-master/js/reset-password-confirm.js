@@ -17,7 +17,7 @@ function resetPasswordConfirm() {
 
     const lang = document.getElementById("current-lang").textContent
 
-    fetch("http://localhost:8080/auth/registration/reset-password-confirm",{
+    fetch("http://localhost:8080/api/v1/auth/registration/reset-password-confirm",{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

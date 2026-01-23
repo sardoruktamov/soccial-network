@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/auth")
 @Slf4j
 @Tag(name = "AuthController", description = "API list for Authorization and Authentication")
 public class AuthController {

@@ -15,7 +15,7 @@ function getProfileList() {
         "query": null
     }
 
-    fetch('http://localhost:8080/profile/filter?page=' + currentPage + "&size=" + pageSize, {
+    fetch('http://localhost:8080/api/v1/profile/filter?page=' + currentPage + "&size=" + pageSize, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -263,7 +263,7 @@ function changeStatus(id, status){
         "status": status
     }
 
-    fetch('http://localhost:8080/profile/status/' + id, {
+    fetch('http://localhost:8080/api/v1/profile/status/' + id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -299,7 +299,7 @@ function deleteUser(id){
         return;
     }
 
-    fetch('http://localhost:8080/profile/' + id, {
+    fetch('http://localhost:8080/api/v1/profile/' + id, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

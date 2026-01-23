@@ -32,7 +32,7 @@ function profileDetailUpdate() {
 
     const lang = document.getElementById("current-lang").textContent
 
-    fetch("http://localhost:8080/profile/detail",{
+    fetch("http://localhost:8080/api/v1/profile/detail",{
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ function profilePasswordUpdate() {
 
     const lang = document.getElementById("current-lang").textContent
 
-    fetch("http://localhost:8080/profile/password",{
+    fetch("http://localhost:8080/api/v1/profile/password",{
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ function profileUserNameChange() {
 
     const lang = document.getElementById("current-lang").textContent
 
-    fetch("http://localhost:8080/profile/username",{
+    fetch("http://localhost:8080/api/v1/profile/username",{
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -202,7 +202,7 @@ function profileUserNameChangeConfirm() {
 
     const lang = document.getElementById("current-lang").textContent
 
-    fetch("http://localhost:8080/profile/username/confirm",{
+    fetch("http://localhost:8080/api/v1/profile/username/confirm",{
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -291,7 +291,7 @@ function uploadImage(){
         }
         const lang = document.getElementById("current-lang").textContent;
 
-        fetch('http://localhost:8080/attach/upload', {
+        fetch('http://localhost:8080/api/v1/attach/upload', {
             method: 'POST',
             headers: {
                 'Accept-Language': lang,
@@ -342,7 +342,7 @@ function updateProfileImage(photoId){
 
     const lang = document.getElementById("current-lang").textContent
 
-    fetch("http://localhost:8080/profile/photo",{
+    fetch("http://localhost:8080/api/v1/profile/photo",{
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
