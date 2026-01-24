@@ -12,6 +12,7 @@ import api.giybat.uz.api.giybat.uz.repository.CustomPostRepository;
 import api.giybat.uz.api.giybat.uz.repository.PostRepository;
 import api.giybat.uz.api.giybat.uz.service.mapper.PostDetailMapper;
 import api.giybat.uz.api.giybat.uz.util.SpringSecurityUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Slf4j
 public class PostService {
 
     @Autowired
@@ -109,6 +111,7 @@ public class PostService {
     }
 
     public List<PostDTO> getSimilarPostList(SimilarPostListDTO dto) {
+        log.info("ssssssssiiiimmmmmmmmm---", dto.getExceptId());
         List<PostEntity> postEntitiesList = postRepository.getSimilarPostList(dto.getExceptId());
 
         List<PostDTO> dtoList = postEntitiesList.stream()

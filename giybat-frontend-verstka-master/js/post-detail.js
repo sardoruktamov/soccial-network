@@ -26,7 +26,7 @@ function getPostById(idParam) {
             }
         })
         .then(data => {
-            console.log(data)
+            // console.log(data)
             //photo
             const image = document.getElementById("postDetailImgId");
             if (data.photo && data.photo.url){
@@ -68,6 +68,7 @@ function getPostList(exceptId) {
             console.log('Success:', data);
             if (data && data.length > 0){
                 showPostList(data);
+                console.log('Success:', data.content);
             }
         })
         .catch(error => {
@@ -88,6 +89,7 @@ function formatDate(isoDateString) {
     return `${day}.${month}.${year} ${hours}:${minutes}`;
 }
 
+// similar post list
 function showPostList(postList) {
     const parent = document.getElementById("similar-post-container-id")
     parent.innerHTML = '';

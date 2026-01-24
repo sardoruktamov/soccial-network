@@ -18,7 +18,7 @@ public interface PostRepository extends CrudRepository<PostEntity, String>, Pagi
 //    @Query("select * from post where profile_id = ? and visible = true")
     Page<PostEntity> getAllByProfileIdAndVisibleTrueOrderByCreatedDateDesc(Integer profileId, Pageable pageable);
 
-    @Query("from PostEntity where id != ?1 and visible = true and p.status = 'ACTIVE' order by createdDate desc limit 3")
+    @Query("from PostEntity where id != ?1 and visible = true order by createdDate desc limit 3")
     List<PostEntity> getSimilarPostList(String exceptId);
     @Transactional
     @Modifying

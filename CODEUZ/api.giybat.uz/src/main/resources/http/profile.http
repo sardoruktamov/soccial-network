@@ -78,7 +78,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1I
 }
 
 ### Login
-POST localhost:8080/auth/login
+POST localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {

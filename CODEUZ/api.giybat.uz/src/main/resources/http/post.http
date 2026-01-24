@@ -1,7 +1,7 @@
 ### Post create
 POST localhost:8080/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3NDY4OTE2MDEsImV4cCI6MTc0Njk3ODAwMX0.e8yEQ0AcE-mTyTLiyNb4qKhASc4Os_zbmK6njN1FoWsdaYLS6De7-uFmFHK71okt3803YpxsOJrU9Mez1rTG6A
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1a3RhbW92OTE5OEBtYWlsLnJ1Iiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTixST0xFX1NVUEVSQURNSU4iLCJpZCI6IjEiLCJpYXQiOjE3NjkxNzEzMTQsImV4cCI6MTc2OTI1NzcxNH0.ch4Ig61uv3Nlb2hOYP-tI9THD7-1Z3X1OOCUfEIsUVDVBp6BuVrzviGXF5E5B9NASfh-m0CqBcFPygkegmRMgQ
 
 {
   "title": "2-user-93 6777 yaratgan POST",
@@ -41,29 +41,29 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5OTg5MDU4NDY4NjYiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjoiMTIyIiwiaWF0IjoxNzY1NzI4NTEwLCJleHAiOjE3NjU4MTQ5MTB9.UL4sVWqcbArXJkwdcxpsUHpVtn6oMHoc9oIye7IyHc8ObOldtNmaEXyv6cmDKVl6iTFoHRS5mopDW5ZMc1uiEw
 
 ### Profile Post by ID
-GET localhost:8080/posts/public/79b3217b-cb8a-4daf-9536-a85524b820f9
+GET localhost:8080/api/v1/posts/public/79b3217b-cb8a-4daf-9536-a85524b820f9
 Content-Type: application/json
 
 
 ### Filter Post
-POST localhost:8080/posts/public/filter?page=1&size=3
+POST localhost:8080/api/v1/posts/public/filter?page=1&size=3
 Content-Type: application/json
 
 {
   "query": null,
-  "exceptId": "83acfeba-7a4c-40d2-b956-f81413774cd3"
+  "exceptId": null
 }
 
 ### Get simipar Post List
-POST localhost:8080/posts/public/similar
+POST localhost:8080/api/v1/posts/public/similar
 Content-Type: application/json
 
 {
-  "exceptId": "83acfeba-7a4c-40d2-b956-f81413774cd3"
+  "exceptId": "79b3217b-cb8a-4daf-9536-a85524b820f9"
 }
 
 ### Login -ADMIN
-POST localhost:8080/auth/login
+POST localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {

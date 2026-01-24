@@ -37,13 +37,13 @@ public class SpringConfig {
     // barcha uchun ochiq bo'lgan URLlarga tokenni tekshirmasdan murojaat
     // qilishlari uchun array yaratilindi, ya`ni doFilterInternal methodiga murojaat qilmasligi uchun.
     public static final String[] AUTH_WHITELIST = {
-            "/auth/**",
-            "attach/upload",
-            "attach/open/**",
+            "/api/v1/auth/**",
+            "/api/v1/attach/upload",
+            "/api/v1/attach/open/**",
             "swagger-ui/**",
             "/v3/api-docs",
             "/v3/api-docs/**",
-            "/posts/public/**"
+            "/api/v1/posts/public/**"
     };
 
     @Bean
@@ -66,11 +66,11 @@ public class SpringConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // authorization - Foydalanuvchining tizimdagi huquqlarini tekshirish.
-        // Ya'ni foydalanuvchi murojat qilayotgan API-larni ishlatishga ruxsati bor yoki yo'qligini tekshirishdir.
+        // Ya'ni foydalanuvchi murojaat qilayotgan API-larni ishlatishga ruxsati bor yoki yo'qligini tekshirishdir.
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
                     .requestMatchers(AUTH_WHITELIST).permitAll() //AUTH_WHITELIST ni o'rnida "/auth/**" bolishi mumkin edi
-                    .requestMatchers(HttpMethod.GET,"/posts/public/*").permitAll()
+                    .requestMatchers(HttpMethod.GET,"/api/v1/posts/public/*").permitAll()
                     .anyRequest()
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

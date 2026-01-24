@@ -14,6 +14,7 @@ window.onload = function () {
     }
 };
 
+// name update
 function profileDetailUpdate() {
     const name = document.getElementById("profile_settings_name").value
     const jwtToken = localStorage.getItem("jwtToken");
@@ -77,6 +78,7 @@ function profileDetailUpdate() {
 
 }
 
+// password update
 function profilePasswordUpdate() {
     const currentPswd = document.getElementById("profile_settings_current_pswd").value
     const newPswd = document.getElementById("profile_settings_new_pswd").value
@@ -135,6 +137,7 @@ function profilePasswordUpdate() {
 
 }
 
+// username update
 function profileUserNameChange() {
 
     const username = document.getElementById("profile_settings_username").value
